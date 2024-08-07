@@ -5,6 +5,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.german.android.expertcourseunscrambleword.game.GamePage
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -51,11 +52,11 @@ class ScenarioTest {
     @Test
     fun caseNumber2() {
         // Context of the app under test.
-        gamePage.assertInitialStateWithSomeWord()
+        gamePage.assertInitialState()
 
         gamePage.clickSkip()
         setupNewWord(word = "processor")
-        gamePage.assertInitialStateWithNewWord()
+        gamePage.assertInitialState()
 
         gamePage.addInput(userAnswer = "rop")
         gamePage.assertSufficientInputState()
@@ -72,7 +73,7 @@ class ScenarioTest {
 
         gamePage.clickSkip()
         setupNewWord("light")
-        gamePage.assertInitialStateWithNewWord()
+        gamePage.assertInitialState()
 
         gamePage.addInput(userAnswer = "gih")
         gamePage.assertInsufficientInputState()
@@ -85,7 +86,7 @@ class ScenarioTest {
 
         gamePage.clickSkip()
         setupNewWord("tripple")
-        gamePage.assertInitialStateWithNewWord()
+        gamePage.assertInitialState()
 
         gamePage.addInput(userAnswer = "rip")
         gamePage.assertInsufficientInputState()
