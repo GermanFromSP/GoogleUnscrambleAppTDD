@@ -25,7 +25,7 @@ class ButtonUi(
                 withText(buttonTextRes),
                 containerIdMatcher,
                 containerClassTypeMatcher,
-                isAssignableFrom(AppCompatButton::class.java)
+                isAssignableFrom(Button::class.java)
             )
         )
 ) {

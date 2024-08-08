@@ -24,7 +24,7 @@ class CheckButtonUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher
                 withText(R.string.check),
                 containerIdMatcher,
                 containerClassTypeMatcher,
-                isAssignableFrom(AppCompatButton::class.java)
+                isAssignableFrom(Button::class.java)
             )
         )
     ) {
