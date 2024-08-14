@@ -20,7 +20,19 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val viewModel: GameViewModel = GameViewModel()
+        val viewModel = GameViewModel( object : GameRepository{
+            override fun getUnscrambleWord(): String {
+                TODO("Not yet implemented")
+            }
+
+            override fun getOriginalWord(): String {
+                TODO("Not yet implemented")
+            }
+
+            override fun next() {
+                TODO("Not yet implemented")
+            }
+        })
 
         binding.nextButton.setOnClickListener {
             val gameUiState: GameUiState = viewModel.clickNext()
@@ -40,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.inputTextField.addTextChangedListener { editable ->
 
-            val gameUiState: GameUiState = viewModel.checkSufficiton(text = editable.toString())
+            val gameUiState: GameUiState = viewModel.checkSufficient(text = editable.toString())
             gameUiState.update(binding = binding)
         }
 
