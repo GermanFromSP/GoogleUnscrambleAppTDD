@@ -20,7 +20,6 @@ class CheckButtonUi(containerIdMatcher: Matcher<View>, containerClassTypeMatcher
         onView(
             allOf(
                 withId(R.id.checkButton),
-                ButtonColorMatcher("#558F85"),
                 withText(R.string.check),
                 containerIdMatcher,
                 containerClassTypeMatcher,

@@ -1,8 +1,10 @@
 package ru.german.android.expertcourseunscrambleword
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import ru.german.android.expertcourseunscrambleword.game.GamePage
@@ -15,11 +17,14 @@ import ru.german.android.expertcourseunscrambleword.game.GamePage
 @RunWith(AndroidJUnit4::class)
 class ScenarioTest {
 
+    @get:Rule
+    val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+
     private lateinit var gamePage: GamePage
 
     @Before
-    fun setupNewWord(word: String = "bluetooth") {
-        gamePage = GamePage(word = word.reversed())
+    fun setupNewWord() {
+        gamePage = GamePage(word = "bluetooth".reversed())
     }
 
     /**
@@ -41,7 +46,7 @@ class ScenarioTest {
         gamePage.assertCorrectAnswerState()
 
         gamePage.clickNext()
-        setupNewWord(word = "processor")
+        gamePage = GamePage(word = "processor".reversed())
         gamePage.assertInitialState()
     }
 
@@ -55,24 +60,24 @@ class ScenarioTest {
         gamePage.assertInitialState()
 
         gamePage.clickSkip()
-        setupNewWord(word = "processor")
+        gamePage = GamePage(word = "processor".reversed())
         gamePage.assertInitialState()
 
         gamePage.addInput(userAnswer = "rop")
-        gamePage.assertSufficientInputState()
+        gamePage.assertInsufficientInputState()
 
         gamePage.clickSkip()
-        setupNewWord("drone")
+        gamePage = GamePage(word = "drone".reversed())
         gamePage.assertInitialState()
 
         gamePage.addInput(userAnswer = "ro")
-        gamePage.assertSufficientInputState()
+        gamePage.assertInsufficientInputState()
 
         gamePage.addInput(userAnswer = "den")
         gamePage.assertSufficientInputState()
 
         gamePage.clickSkip()
-        setupNewWord("light")
+        gamePage = GamePage(word = "light".reversed())
         gamePage.assertInitialState()
 
         gamePage.addInput(userAnswer = "gih")
@@ -85,13 +90,13 @@ class ScenarioTest {
         gamePage.assertIncorrectAnswerState()
 
         gamePage.clickSkip()
-        setupNewWord("tripple")
+        gamePage = GamePage(word = "tripple".reversed())
         gamePage.assertInitialState()
 
         gamePage.addInput(userAnswer = "rip")
         gamePage.assertInsufficientInputState()
 
-        gamePage.addInput(userAnswer = "lepet")
+        gamePage.addInput(userAnswer = "lept")
         gamePage.assertSufficientInputState()
 
         gamePage.clickCheck()
@@ -100,13 +105,13 @@ class ScenarioTest {
         gamePage.removeInput()
         gamePage.assertInsufficientInputState()
 
-        gamePage.addInput(userAnswer = "ripletep")
+        gamePage.addInput(userAnswer = "p")
         gamePage.assertSufficientInputState()
 
         gamePage.removeInput()
         gamePage.assertInsufficientInputState()
 
-        gamePage.addInput(userAnswer = "pleritep")
+        gamePage.addInput(userAnswer = "t")
         gamePage.assertSufficientInputState()
 
         gamePage.clickCheck()

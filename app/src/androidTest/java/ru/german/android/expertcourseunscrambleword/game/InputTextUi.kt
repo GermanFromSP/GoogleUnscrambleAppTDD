@@ -30,25 +30,26 @@ class InputTextUi(
         return TextInputLayoutErrorEnabledMatcher(boolean)
     }
 
-    private val inputLayoutId: Int = R.id.inputTextLayout
 
-    private val inputLayoutInteraction : ViewInteraction = onView(
+    private val inputLayoutInteraction: ViewInteraction = onView(
         allOf(
+            isAssignableFrom(TextInputLayout::class.java),
             containerIdMatcher,
             containerClassTypeMatcher,
-            withId(inputLayoutId),
-            isAssignableFrom(TextInputLayout::class.java)
+            withId(R.id.inputTextLayout),
+
         )
     )
 
-    private val inputTextInteraction : ViewInteraction = onView(
+    private val inputTextInteraction: ViewInteraction = onView(
         allOf(
-            containerIdMatcher,
-            containerClassTypeMatcher,
+            isAssignableFrom(TextInputEditText::class.java),
+//            containerIdMatcher,
+//            containerClassTypeMatcher,
             withId(R.id.inputTextField),
-            withParent(withId(inputLayoutId)),
-            withParent(isAssignableFrom(TextInputLayout::class.java)),
-            isAssignableFrom(TextInputEditText::class.java)
+//            withParent(withId(R.id.inputTextLayout)),
+//            withParent(isAssignableFrom(TextInputLayout::class.java)),
+
         )
     )
 

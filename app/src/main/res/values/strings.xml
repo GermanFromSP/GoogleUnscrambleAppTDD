@@ -4,4 +4,6 @@
     <string name="check">Check</string>
     <string name="next">Next</string>
     <string name="answer">Your answer</string>
+    <string name="empty" />
+    <string name="error_mesage">Incorrect answer!</string>
 </resources>

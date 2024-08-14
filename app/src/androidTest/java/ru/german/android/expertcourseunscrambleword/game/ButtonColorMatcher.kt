@@ -8,7 +8,7 @@ import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.Description
 
 class ButtonColorMatcher(private val color: Int) :
-BoundedMatcher<View, Button>(Button::class.java){
+    BoundedMatcher<View, Button>(Button::class.java) {
 
     constructor(colorString: String) : this(Color.parseColor(colorString))
 
