@@ -1,6 +1,7 @@
 package ru.german.android.expertcourseunscrambleword.game
 
 import android.view.View
+import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -25,7 +26,7 @@ class ScrambleWordUi(
             containerIdMatcher,
             containerClassTypeMatcher,
             withId(R.id.scrambledWordTextView),
-            isAssignableFrom(TextInputLayout::class.java)
+            isAssignableFrom(TextView::class.java)
         )
     )
 

@@ -14,14 +14,12 @@ import org.hamcrest.Matchers.allOf
 class ButtonUi(
     id: Int,
     buttonTextRes: Int,
-    buttonColorHex: String,
     containerIdMatcher: Matcher<View>,
     containerClassTypeMatcher: Matcher<View>
 ) : AbstractButton(
         onView(
             allOf(
                 withId(id),
-                ButtonColorMatcher(buttonColorHex),
                 withText(buttonTextRes),
                 containerIdMatcher,
                 containerClassTypeMatcher,

@@ -28,7 +28,6 @@ class GamePage(word: String) {
     private val skipUi = ButtonUi(
         id = R.id.skipButton,
         buttonTextRes = R.string.skip,
-        buttonColorHex = "#C8C995",
         containerIdMatcher = containerIdMatcher,
         containerClassTypeMatcher = containerClassTypeMatcher
     )
@@ -41,7 +40,6 @@ class GamePage(word: String) {
     private val nextUi = ButtonUi(
         id = R.id.nextButton,
         buttonTextRes = R.string.next,
-        buttonColorHex = "#A297E7",
         containerIdMatcher = containerIdMatcher,
         containerClassTypeMatcher = containerClassTypeMatcher
     )
