@@ -6,8 +6,9 @@ import androidx.transition.Visibility
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ru.german.android.expertcourseunscrambleword.databinding.ActivityMainBinding
+import java.io.Serializable
 
-interface GameUiState {
+interface GameUiState : Serializable {
 
 
     fun update(binding: ActivityMainBinding)
@@ -66,7 +67,7 @@ interface GameUiState {
     )
 }
 
-interface CheckUiState {
+interface CheckUiState : Serializable {
 
     fun update(button: Button)
 
@@ -85,7 +86,7 @@ interface CheckUiState {
     object Invisible : Abstract(visibility = View.GONE, enabled = false)
 }
 
-interface InputUiState {
+interface InputUiState : Serializable {
 
     fun update(textInputLayout: TextInputLayout, textInputField: TextInputEditText)
 

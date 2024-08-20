@@ -27,6 +27,12 @@ class ScenarioTest {
         gamePage = GamePage(word = "bluetooth".reversed())
     }
 
+    private fun ActivityScenarioRule<*>.doWithRecreate(block: () -> Unit) {
+        block.invoke()
+        scenario.recreate()
+        block.invoke()
+    }
+
     /**
      * Test case number 1 (UGTC - 01)
      */
@@ -34,20 +40,20 @@ class ScenarioTest {
     @Test
     fun caseNumber1() {
         // Context of the app under test.
-        gamePage.assertInitialState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
 
         gamePage.addInput(userAnswer = "b")
-        gamePage.assertInsufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
 
         gamePage.addInput(userAnswer = "luetooth")
-        gamePage.assertSufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
 
         gamePage.clickCheck()
-        gamePage.assertCorrectAnswerState()
+        activityScenarioRule.doWithRecreate(gamePage::assertCorrectAnswerState)
 
         gamePage.clickNext()
         gamePage = GamePage(word = "processor".reversed())
-        gamePage.assertInitialState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
     }
 
     /**
@@ -57,64 +63,64 @@ class ScenarioTest {
     @Test
     fun caseNumber2() {
         // Context of the app under test.
-        gamePage.assertInitialState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
 
         gamePage.clickSkip()
         gamePage = GamePage(word = "processor".reversed())
-        gamePage.assertInitialState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
 
         gamePage.addInput(userAnswer = "rop")
-        gamePage.assertInsufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
 
         gamePage.clickSkip()
         gamePage = GamePage(word = "drone".reversed())
-        gamePage.assertInitialState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
 
         gamePage.addInput(userAnswer = "ro")
-        gamePage.assertInsufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
 
         gamePage.addInput(userAnswer = "den")
-        gamePage.assertSufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
 
         gamePage.clickSkip()
         gamePage = GamePage(word = "light".reversed())
-        gamePage.assertInitialState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
 
         gamePage.addInput(userAnswer = "gih")
-        gamePage.assertInsufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
 
         gamePage.addInput(userAnswer = "tl")
-        gamePage.assertSufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
 
         gamePage.clickCheck()
-        gamePage.assertIncorrectAnswerState()
+        activityScenarioRule.doWithRecreate(gamePage::assertIncorrectAnswerState)
 
         gamePage.clickSkip()
         gamePage = GamePage(word = "tripple".reversed())
-        gamePage.assertInitialState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
 
         gamePage.addInput(userAnswer = "rip")
-        gamePage.assertInsufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
 
         gamePage.addInput(userAnswer = "lept")
-        gamePage.assertSufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
 
         gamePage.clickCheck()
-        gamePage.assertIncorrectAnswerState()
+        activityScenarioRule.doWithRecreate(gamePage::assertIncorrectAnswerState)
 
         gamePage.removeInput()
-        gamePage.assertInsufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
 
         gamePage.addInput(userAnswer = "p")
-        gamePage.assertSufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
 
         gamePage.removeInput()
-        gamePage.assertInsufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
 
         gamePage.addInput(userAnswer = "t")
-        gamePage.assertSufficientInputState()
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
 
         gamePage.clickCheck()
-        gamePage.assertIncorrectAnswerState()
+        activityScenarioRule.doWithRecreate(gamePage::assertIncorrectAnswerState)
     }
 }
