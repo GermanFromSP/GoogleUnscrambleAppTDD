@@ -1,6 +1,7 @@
 package ru.german.android.expertcourseunscrambleword
 
 import android.app.Application
+import android.content.Context
 
 class UnscrambleApp : Application() {
 
@@ -8,6 +9,16 @@ class UnscrambleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        viewModel = GameViewModel(GameRepository.Base())
+
+        val sharedPreferences = getSharedPreferences("unscrambleAppData", Context.MODE_PRIVATE)
+        viewModel = GameViewModel(
+            GameRepository.Base(
+                wordCaseIndex = IntCache.Base(
+                    sharedPreferences = sharedPreferences,
+                    key = "unscrambleWordIndex",
+                    defaultValue = 0
+                )
+            )
+        )
     }
 }

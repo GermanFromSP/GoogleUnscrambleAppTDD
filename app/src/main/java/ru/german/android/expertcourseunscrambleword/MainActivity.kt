@@ -1,6 +1,5 @@
 package ru.german.android.expertcourseunscrambleword
 
-import android.app.Application
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -9,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.widget.addTextChangedListener
 import ru.german.android.expertcourseunscrambleword.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
