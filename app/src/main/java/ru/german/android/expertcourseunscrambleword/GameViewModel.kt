@@ -9,8 +9,8 @@ class GameViewModel(private val repository: GameRepository) {
 
     fun clickCheck(text: String): GameUiState {
         return if (repository.getOriginalWord() == text) {
-            GameUiState.Correct(repository.getUnscrambleWord())
-        } else GameUiState.Incorrect(repository.getUnscrambleWord())
+            GameUiState.Correct
+        } else GameUiState.Incorrect
     }
 
     fun clickSkip(): GameUiState {
@@ -20,12 +20,17 @@ class GameViewModel(private val repository: GameRepository) {
 
     fun checkSufficient(text: String): GameUiState {
         return if (repository.getOriginalWord().length == text.length) {
-            GameUiState.Sufficient(repository.getUnscrambleWord())
-        } else GameUiState.Insufficient(repository.getUnscrambleWord())
+            GameUiState.Sufficient
+        } else GameUiState.Insufficient
     }
 
-    fun init(): GameUiState {
-        return GameUiState.InitialState(repository.getUnscrambleWord())
+    fun init(isFirstRun: Boolean = true): GameUiState {
+        return if (isFirstRun) {
+            GameUiState.InitialState(repository.getUnscrambleWord())
+        } else {
+            GameUiState.Empty
+        }
+
     }
 
 }
