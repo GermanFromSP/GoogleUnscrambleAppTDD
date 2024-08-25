@@ -27,15 +27,15 @@ class GameViewModelTest {
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "1")
-        expected = GameUiState.Insufficient(shuffledWord = "f1")
+        expected = GameUiState.Insufficient
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "1f")
-        expected = GameUiState.Sufficient(shuffledWord = "f1")
+        expected = GameUiState.Sufficient
         assertEquals(expected, actual)
 
         actual = viewModel.clickCheck(text = "1f")
-        expected = GameUiState.Correct(shuffledWord = "f1")
+        expected = GameUiState.Correct
         assertEquals(expected, actual)
 
         actual = viewModel.clickNext()
@@ -55,11 +55,11 @@ class GameViewModelTest {
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "f")
-        expected = GameUiState.Insufficient(shuffledWord = "f2")
+        expected = GameUiState.Insufficient
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "f2")
-        expected = GameUiState.Sufficient(shuffledWord = "f2")
+        expected = GameUiState.Sufficient
         assertEquals(expected, actual)
 
         actual = viewModel.clickSkip()
@@ -67,15 +67,15 @@ class GameViewModelTest {
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "f")
-        expected = GameUiState.Insufficient(shuffledWord = "f3")
+        expected = GameUiState.Insufficient
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "f2")
-        expected = GameUiState.Sufficient(shuffledWord = "f3")
+        expected = GameUiState.Sufficient
         assertEquals(expected, actual)
 
         actual = viewModel.clickCheck(text = "f2")
-        expected = GameUiState.Incorrect(shuffledWord = "f3")
+        expected = GameUiState.Incorrect
         assertEquals(expected, actual)
 
         actual = viewModel.clickSkip()
@@ -83,35 +83,35 @@ class GameViewModelTest {
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "f")
-        expected = GameUiState.Insufficient(shuffledWord = "f4")
+        expected = GameUiState.Insufficient
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "f2")
-        expected = GameUiState.Sufficient(shuffledWord = "f4")
+        expected = GameUiState.Sufficient
         assertEquals(expected, actual)
 
         actual = viewModel.clickCheck(text = "f2")
-        expected = GameUiState.Incorrect(shuffledWord = "f4")
+        expected = GameUiState.Incorrect
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "")
-        expected = GameUiState.Insufficient(shuffledWord = "f4")
+        expected = GameUiState.Insufficient
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "f2")
-        expected = GameUiState.Sufficient(shuffledWord = "f4")
+        expected = GameUiState.Sufficient
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "")
-        expected = GameUiState.Insufficient(shuffledWord = "f4")
+        expected = GameUiState.Insufficient
         assertEquals(expected, actual)
 
         actual = viewModel.checkSufficient(text = "f3")
-        expected = GameUiState.Sufficient(shuffledWord = "f4")
+        expected = GameUiState.Sufficient
         assertEquals(expected, actual)
 
         actual = viewModel.clickCheck(text = "f3")
-        expected = GameUiState.Incorrect(shuffledWord = "f4")
+        expected = GameUiState.Incorrect
         assertEquals(expected, actual)
 
 

@@ -1,6 +1,5 @@
 package ru.german.android.expertcourseunscrambleword
 
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,8 +21,18 @@ class MainActivity : AppCompatActivity() {
 
         override fun afterTextChanged(s: Editable?) {
             gameUiState = viewModel.checkSufficient(text = s.toString())
-            gameUiState.update(binding = binding)
+            update.invoke()
         }
+    }
+
+    private val update: () -> Unit = {
+        gameUiState.update(
+            binding.scrambledWordTextView,
+            binding.inputView,
+            binding.skipButton,
+            binding.checkButton,
+            binding.nextButton
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,52 +50,34 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
-
         binding.nextButton.setOnClickListener {
             gameUiState = viewModel.clickNext()
-            gameUiState.update(binding = binding)
+            update.invoke()
         }
 
         binding.checkButton.setOnClickListener {
-            gameUiState = viewModel.clickCheck(text = binding.inputTextField.text.toString())
-            gameUiState.update(binding = binding)
+            gameUiState = viewModel.clickCheck(text = binding.inputView.text())
+            update.invoke()
         }
 
         binding.skipButton.setOnClickListener {
             gameUiState = viewModel.clickSkip()
-            gameUiState.update(binding = binding)
+            update.invoke()
         }
 
-        gameUiState = if (savedInstanceState == null) {
-            viewModel.init()
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                savedInstanceState.getSerializable(
-                    "uiState",
-                    GameUiState::class.java
-                ) as GameUiState
-            } else {
-                savedInstanceState.getSerializable("uiState") as GameUiState
-            }
-        }
-        gameUiState.update(binding = binding)
+        gameUiState = viewModel.init(savedInstanceState == null)
 
+        update.invoke()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putSerializable("uiState", gameUiState)
-    }
 
     override fun onResume() {
         super.onResume()
-        binding.inputTextField.addTextChangedListener(textWatcher)
+        binding.inputView.addTextChangedListener(textWatcher)
     }
 
     override fun onPause() {
         super.onPause()
-        binding.inputTextField.removeTextChangedListener(textWatcher)
+        binding.inputView.removeTextChangedListener(textWatcher)
     }
 }

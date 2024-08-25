@@ -1,83 +1,122 @@
 package ru.german.android.expertcourseunscrambleword
 
 import android.view.View
-import android.widget.Button
-import androidx.transition.Visibility
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import ru.german.android.expertcourseunscrambleword.databinding.ActivityMainBinding
+import ru.german.android.expertcourseunscrambleword.views.check.UpdateCheckButton
+import ru.german.android.expertcourseunscrambleword.views.input.UpdateInput
+import ru.german.android.expertcourseunscrambleword.views.scrambleword.UpdateText
+import ru.german.android.expertcourseunscrambleword.views.visibilitybutton.UpdateVisibility
+import ru.german.android.expertcourseunscrambleword.views.visibilitybutton.VisibilityState
 import java.io.Serializable
 
-interface GameUiState : Serializable {
+interface GameUiState {
 
 
-    fun update(binding: ActivityMainBinding)
+    fun update(
+        questionTextView: UpdateText,
+        inputView: UpdateInput,
+        skip: UpdateVisibility,
+        check: UpdateCheckButton,
+        next: UpdateVisibility
+    )
+
+    object Empty : GameUiState {
+
+        override fun update(
+            questionTextView: UpdateText,
+            inputView: UpdateInput,
+            skip: UpdateVisibility,
+            check: UpdateCheckButton,
+            next: UpdateVisibility
+        ) = Unit
+
+
+    }
 
     abstract class Abstract(
-        private val shuffledWord: String,
+
         private val textInputUiState: InputUiState,
-        private val skipVisibility: Int,
         private val checkUiState: CheckUiState,
-        private val nextVisibility: Int = View.GONE
     ) : GameUiState {
 
-        override fun update(binding: ActivityMainBinding) = with(binding) {
-            scrambledWordTextView.text = shuffledWord
-            skipButton.visibility = skipVisibility
-            nextButton.visibility = nextVisibility
-            checkUiState.update(checkButton)
-            textInputUiState.update(inputTextLayout, inputTextField)
+        override fun update(
+            questionTextView: UpdateText,
+            inputView: UpdateInput,
+            skip: UpdateVisibility,
+            check: UpdateCheckButton,
+            next: UpdateVisibility
+        ) {
+            inputView.update(textInputUiState)
+            skip.update(VisibilityState.Visible)
+            check.update(checkUiState)
+        }
+
+    }
+
+    data class InitialState(
+        private val shuffledWord: String,
+        private val userInput: String = ""
+    ) : Abstract(
+        textInputUiState = InputUiState.Initial(userInput),
+        checkUiState = CheckUiState.Disabled,
+    ) {
+        override fun update(
+            questionTextView: UpdateText,
+            inputView: UpdateInput,
+            skip: UpdateVisibility,
+            check: UpdateCheckButton,
+            next: UpdateVisibility
+        ) {
+            super.update(questionTextView, inputView, skip, check, next)
+            questionTextView.update(shuffledWord)
+            next.update(VisibilityState.Gone)
         }
     }
 
-    data class InitialState(private val shuffledWord: String) : Abstract(
-            shuffledWord = shuffledWord,
-            textInputUiState = InputUiState.Initial,
-            skipVisibility = View.VISIBLE,
-            checkUiState = CheckUiState.Disabled
-        )
-
-    data class Insufficient(private val shuffledWord: String) :  Abstract(
-        shuffledWord = shuffledWord,
+    object Insufficient : Abstract(
         textInputUiState = InputUiState.EnabledNoError,
-        skipVisibility = View.VISIBLE,
-        checkUiState = CheckUiState.Disabled
+        checkUiState = CheckUiState.Disabled,
     )
 
-    data class Sufficient(private val shuffledWord: String) :  Abstract(
-        shuffledWord = shuffledWord,
+    object Sufficient : Abstract(
         textInputUiState = InputUiState.EnabledNoError,
-        skipVisibility = View.VISIBLE,
-        checkUiState = CheckUiState.Enabled
+        checkUiState = CheckUiState.Enabled,
     )
 
-    data class Correct(private val shuffledWord: String) :  Abstract(
-        shuffledWord = shuffledWord,
+    object Correct : Abstract(
         textInputUiState = InputUiState.Correct,
-        skipVisibility = View.GONE,
         checkUiState = CheckUiState.Invisible,
-        nextVisibility = View.VISIBLE
-    )
+    ) {
+        override fun update(
+            questionTextView: UpdateText,
+            inputView: UpdateInput,
+            skip: UpdateVisibility,
+            check: UpdateCheckButton,
+            next: UpdateVisibility
+        ) {
+            super.update(questionTextView, inputView, skip, check, next)
+            next.update(VisibilityState.Visible)
+            skip.update(VisibilityState.Gone)
+        }
+    }
 
-    data class Incorrect(private val shuffledWord: String) :  Abstract(
-        shuffledWord = shuffledWord,
+    object Incorrect : Abstract(
         textInputUiState = InputUiState.Incorrect,
-        skipVisibility = View.VISIBLE,
-        checkUiState = CheckUiState.Disabled
+        checkUiState = CheckUiState.Disabled,
     )
 }
 
 interface CheckUiState : Serializable {
 
-    fun update(button: Button)
+    fun update(updateCheckButton: UpdateCheckButton)
 
     abstract class Abstract(
         private val visibility: Int,
         private val enabled: Boolean
     ) : CheckUiState {
-        override fun update(button: Button) {
-            button.visibility = visibility
-            button.isEnabled = enabled
+
+        override fun update(updateCheckButton: UpdateCheckButton) {
+            updateCheckButton.update(visibility, enabled)
         }
     }
 
@@ -88,29 +127,30 @@ interface CheckUiState : Serializable {
 
 interface InputUiState : Serializable {
 
-    fun update(textInputLayout: TextInputLayout, textInputField: TextInputEditText)
+    fun update(updateInput: UpdateInput)
 
     abstract class Abstract(
         private val errorIsVisible: Boolean,
         private val enabled: Boolean,
-        private val clearText: Boolean
     ) : InputUiState {
 
-        override fun update(textInputLayout: TextInputLayout, textInputField: TextInputEditText) {
-            textInputLayout.isErrorEnabled = errorIsVisible
-            if (errorIsVisible) textInputLayout.error =
-                textInputLayout.context.getString(R.string.error_mesage)
-            textInputLayout.isEnabled = enabled
-            if (clearText) textInputField.setText(R.string.empty)
+        override fun update(updateInput: UpdateInput) {
+            updateInput.update(errorIsVisible, enabled)
         }
     }
 
-    object Initial : Abstract(false, true, true)
+    data class Initial(private val userInput: String) : Abstract(false, true) {
 
-    object EnabledNoError : Abstract(false, true, false)
+        override fun update(updateInput: UpdateInput) {
+            super.update(updateInput)
+            updateInput.update(userInput)
+        }
+    }
 
-    object Correct : Abstract(false, false, false)
+    object EnabledNoError : Abstract(false, true)
 
-    object Incorrect : Abstract(true, true, false)
+    object Correct : Abstract(false, false)
+
+    object Incorrect : Abstract(true, true)
 
 }

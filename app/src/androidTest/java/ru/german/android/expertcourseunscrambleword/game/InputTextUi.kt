@@ -21,10 +21,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import ru.german.android.expertcourseunscrambleword.R
 
-class InputTextUi(
-    containerIdMatcher: Matcher<View>,
-    containerClassTypeMatcher: Matcher<View>
-) {
+class InputTextUi{
 
     private fun getInputLayoutErrorState(boolean: Boolean): TextInputLayoutErrorEnabledMatcher {
         return TextInputLayoutErrorEnabledMatcher(boolean)
@@ -34,8 +31,6 @@ class InputTextUi(
     private val inputLayoutInteraction: ViewInteraction = onView(
         allOf(
             isAssignableFrom(TextInputLayout::class.java),
-            containerIdMatcher,
-            containerClassTypeMatcher,
             withId(R.id.inputTextLayout),
 
         )
