@@ -100,4 +100,8 @@ class GamePage(word: String) {
     fun removeInput() {
         inputTextUi.removeInput()
     }
+
+    fun assertNotVisible() {
+        scrambledWordUi.assertDoesNotExist()
+    }
 }

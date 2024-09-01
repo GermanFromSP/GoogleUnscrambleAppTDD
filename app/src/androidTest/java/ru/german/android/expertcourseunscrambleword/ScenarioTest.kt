@@ -203,7 +203,7 @@ class ScenarioTest {
         gamePage.clickNext()
         gamePage.assertNotVisible()
 
-        var gameOverPage = GameOverPage(corrects = 5, incorrects = 0)
+        var gameOverPage = GameOverPage(correct = 5, incorrect = 0)
         activityScenarioRule.doWithRecreate(gameOverPage::assertInitialState)
 
         gameOverPage.clickNewGame()
@@ -247,7 +247,7 @@ class ScenarioTest {
         gamePage.clickSkip()
         gamePage.assertNotVisible()
 
-        gameOverPage = GameOverPage(corrects = 0, incorrects = 5)
+        gameOverPage = GameOverPage(correct = 0, incorrect = 5)
         activityScenarioRule.doWithRecreate(gameOverPage::assertInitialState)
 
         gameOverPage.clickNewGame()
@@ -306,7 +306,7 @@ class ScenarioTest {
         gamePage.clickSkip()
         gamePage.assertNotVisible()
 
-        gameOverPage = GameOverPage(corrects = 2, incorrects = 3)
+        gameOverPage = GameOverPage(correct = 2, incorrect = 3)
         activityScenarioRule.doWithRecreate(gameOverPage::assertInitialState)
 
         gameOverPage.clickNewGame()
