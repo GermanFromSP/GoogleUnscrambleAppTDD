@@ -7,4 +7,5 @@
     <string name="empty" />
     <string name="error_mesage">Incorrect answer!</string>
     <string name="newGame">New game</string>
+    <string name="stats">\Corrects: %d\nIncorrects: %d</string>
 </resources>
