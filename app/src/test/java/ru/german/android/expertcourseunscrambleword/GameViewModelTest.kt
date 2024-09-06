@@ -41,6 +41,42 @@ class GameViewModelTest {
         actual = viewModel.clickNext()
         expected = GameUiState.InitialState(shuffledWord = "f2")
         assertEquals(expected, actual)
+
+        actual = viewModel.checkSufficient(text = "2f")
+        expected = GameUiState.Sufficient
+        assertEquals(expected, actual)
+
+        actual = viewModel.clickCheck(text = "2f")
+        expected = GameUiState.Correct
+        assertEquals(expected, actual)
+
+        actual = viewModel.clickNext()
+        expected = GameUiState.InitialState(shuffledWord = "f3")
+        assertEquals(expected, actual)
+
+        actual = viewModel.checkSufficient(text = "3f")
+        expected = GameUiState.Sufficient
+        assertEquals(expected, actual)
+
+        actual = viewModel.clickCheck(text = "3f")
+        expected = GameUiState.Correct
+        assertEquals(expected, actual)
+
+        actual = viewModel.clickNext()
+        expected = GameUiState.InitialState(shuffledWord = "f4")
+        assertEquals(expected, actual)
+
+        actual = viewModel.checkSufficient(text = "4f")
+        expected = GameUiState.Sufficient
+        assertEquals(expected, actual)
+
+        actual = viewModel.clickCheck(text = "4f")
+        expected = GameUiState.Correct
+        assertEquals(expected, actual)
+
+        actual = viewModel.clickNext()
+        expected = GameUiState.Finish
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -114,12 +150,16 @@ class GameViewModelTest {
         expected = GameUiState.Incorrect
         assertEquals(expected, actual)
 
+        actual = viewModel.clickSkip()
+        expected = GameUiState.Finish
+        assertEquals(expected, actual)
+
 
     }
 
     private class FakeRepository : GameRepository {
 
-        private val originalList= listOf("1f", "2f", "3f", "4f")
+        private val originalList = listOf("1f", "2f", "3f", "4f")
 
         private val unscrambledList = originalList.map { it.reversed() }
 
@@ -131,7 +171,8 @@ class GameViewModelTest {
 
         override fun next() {
             wordCaseIndex++
-            if (wordCaseIndex == originalList.size) wordCaseIndex = 0
         }
+
+        override fun isLastQuestion(): Boolean = wordCaseIndex == originalList.size
     }
 }

@@ -4,7 +4,11 @@ class GameViewModel(private val repository: GameRepository) {
 
     fun clickNext(): GameUiState {
         repository.next()
-        return GameUiState.InitialState(repository.getUnscrambleWord())
+        return if (repository.isLastQuestion()) {
+            GameUiState.Finish
+        } else {
+            init()
+        }
     }
 
     fun clickCheck(text: String): GameUiState {
@@ -15,7 +19,11 @@ class GameViewModel(private val repository: GameRepository) {
 
     fun clickSkip(): GameUiState {
         repository.next()
-        return GameUiState.InitialState(repository.getUnscrambleWord())
+        return if (repository.isLastQuestion()) {
+            GameUiState.Finish
+        } else {
+            init()
+        }
     }
 
     fun checkSufficient(text: String): GameUiState {

@@ -30,7 +30,7 @@ class GameOverFragment : Fragment() {
         val viewModel: GameOverViewModel =
             (requireActivity().application as UnscrambleApp).gameOverViewModel
 
-        binding.statsTextView.update(viewModel.statsUiState)
+        binding.statsTextView.update(viewModel.getStatsUiState())
 
         binding.newGameButton.setOnClickListener {
             (requireActivity() as NavigateToGame).navigateToGame()

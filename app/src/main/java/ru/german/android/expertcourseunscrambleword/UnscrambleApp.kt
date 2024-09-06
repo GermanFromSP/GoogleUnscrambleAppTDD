@@ -28,5 +28,6 @@ class UnscrambleApp : Application() {
 }
 
 class GameOverViewModel {
-    val statsUiState: StatsUiState = StatsUiState.Base(1, 1)
+
+    fun getStatsUiState(): StatsUiState = StatsUiState.Base(1, 1)
 }

@@ -66,8 +66,8 @@ class GameFragment : Fragment() {
         }
 
         binding.skipButton.setOnClickListener {
-//            gameUiState = viewModel.clickSkip()
-//            update.invoke()
+            gameUiState = viewModel.clickSkip()
+            update.invoke()
             (requireActivity() as NavigateToGameOver).navigateToGameOver()
         }
 
