@@ -49,7 +49,7 @@ interface StatsUiState : Serializable {
 
     fun update(statsTextView: UpdateStats)
 
-    class Base(private val corrects: Int, private val incorrect: Int) : StatsUiState {
+    data class Base(private val corrects: Int, private val incorrect: Int) : StatsUiState {
         override fun update(statsTextView: UpdateStats) {
             statsTextView.update(corrects, incorrect)
         }

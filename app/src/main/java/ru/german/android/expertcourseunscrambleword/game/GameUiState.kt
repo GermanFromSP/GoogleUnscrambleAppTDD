@@ -1,7 +1,6 @@
-package ru.german.android.expertcourseunscrambleword
+package ru.german.android.expertcourseunscrambleword.game
 
 import android.view.View
-import ru.german.android.expertcourseunscrambleword.databinding.ActivityMainBinding
 import ru.german.android.expertcourseunscrambleword.result.NavigateToGameOver
 import ru.german.android.expertcourseunscrambleword.views.check.UpdateCheckButton
 import ru.german.android.expertcourseunscrambleword.views.input.UpdateInput

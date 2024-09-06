@@ -1,4 +1,4 @@
-package ru.german.android.expertcourseunscrambleword
+package ru.german.android.expertcourseunscrambleword.game
 
 class GameViewModel(private val repository: GameRepository) {
 
