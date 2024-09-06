@@ -4,6 +4,7 @@ interface GameRepository {
     fun getUnscrambleWord(): String
     fun getOriginalWord(): String
     fun next()
+    fun isLastQuestion(): Boolean
 
     data class Base(
         private val listOfOriginal: List<String> = listOf(
@@ -19,8 +20,11 @@ interface GameRepository {
         override fun getOriginalWord(): String = listOfOriginal[wordCaseIndex.read()]
 
         override fun next() {
-            wordCaseIndex.save(wordCaseIndex.read() + 1)
-            if (wordCaseIndex.read() == listOfOriginal.size) wordCaseIndex.save(0)
+
+            wordCaseIndex.save(if (isLastQuestion()) (0) else wordCaseIndex.read() + 1)
+
         }
+
+        override fun isLastQuestion(): Boolean = wordCaseIndex.read() == listOfOriginal.size
     }
 }

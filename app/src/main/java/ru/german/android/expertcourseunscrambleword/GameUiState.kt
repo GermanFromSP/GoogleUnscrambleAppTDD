@@ -2,6 +2,7 @@ package ru.german.android.expertcourseunscrambleword
 
 import android.view.View
 import ru.german.android.expertcourseunscrambleword.databinding.ActivityMainBinding
+import ru.german.android.expertcourseunscrambleword.result.NavigateToGameOver
 import ru.german.android.expertcourseunscrambleword.views.check.UpdateCheckButton
 import ru.german.android.expertcourseunscrambleword.views.input.UpdateInput
 import ru.german.android.expertcourseunscrambleword.views.scrambleword.UpdateText
@@ -18,7 +19,14 @@ interface GameUiState {
         skip: UpdateVisibility,
         check: UpdateCheckButton,
         next: UpdateVisibility
-    )
+    ) = Unit
+
+    fun navigate(navigate: NavigateToGameOver) = Unit
+
+    object Finish : GameUiState {
+
+        override fun navigate(navigate: NavigateToGameOver) = navigate.navigateToGameOver()
+    }
 
     object Empty : GameUiState {
 
