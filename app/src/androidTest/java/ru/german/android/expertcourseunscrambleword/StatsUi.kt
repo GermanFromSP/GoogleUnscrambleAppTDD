@@ -2,6 +2,7 @@ package ru.german.android.expertcourseunscrambleword
 
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -22,8 +23,8 @@ class StatsUi(
     private val interaction = onView(
         allOf(
             withId(R.id.statsTextView),
-            isAssignableFrom(TextView::class.java),
-            withText("Corrects: $correct \nIncorrects: $incorrect") ,
+            isAssignableFrom(AppCompatTextView::class.java),
+            withText("Corrects: $correct\nIncorrects: $incorrect") ,
             containerIdMatcher,
             containerClassTypeMatcher
         )

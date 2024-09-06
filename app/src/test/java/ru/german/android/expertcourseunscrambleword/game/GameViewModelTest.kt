@@ -13,10 +13,12 @@ import org.junit.Before
 class GameViewModelTest {
 
     private lateinit var viewModel: GameViewModel
+    private lateinit var repository: FakeRepository
 
     @Before
     fun setup() {
-        viewModel = GameViewModel(repository = FakeRepository())
+        repository = FakeRepository()
+        viewModel = GameViewModel(repository = repository)
     }
 
     @Test
@@ -77,6 +79,7 @@ class GameViewModelTest {
         actual = viewModel.clickNext()
         expected = GameUiState.Finish
         assertEquals(expected, actual)
+        assertEquals(true, repository.clearCalled)
     }
 
     @Test
@@ -129,6 +132,7 @@ class GameViewModelTest {
         actual = viewModel.clickCheck(text = "f2")
         expected = GameUiState.Incorrect
         assertEquals(expected, actual)
+        assertEquals(false, repository.clearCalled)
 
         actual = viewModel.checkSufficient(text = "")
         expected = GameUiState.Insufficient
@@ -153,6 +157,7 @@ class GameViewModelTest {
         actual = viewModel.clickSkip()
         expected = GameUiState.Finish
         assertEquals(expected, actual)
+        assertEquals(true, repository.clearCalled)
 
 
     }
@@ -174,5 +179,15 @@ class GameViewModelTest {
         }
 
         override fun isLastQuestion(): Boolean = wordCaseIndex == originalList.size
+
+        var clearCalled = false
+
+        override fun clear() {
+          clearCalled = true
+        }
+
+        override fun skip() {
+           next()
+        }
     }
 }

@@ -13,7 +13,11 @@ class GameOverViewModelTest {
         val repository = FakeRepository()
         val viewModel = GameOverViewModel(repository = repository)
 
-        assertEquals(StatsUiState.Base(2,2), viewModel.getStatsUiState())
+        assertEquals(StatsUiState.Base(2, 2), viewModel.getStatsUiState())
+        assertEquals(false, repository.clearCalled)
+
+        viewModel.clear()
+        assertEquals(true, repository.clearCalled)
     }
 }
 
@@ -21,4 +25,9 @@ private class FakeRepository : StatsRepository {
 
     override fun stats(): Pair<Int, Int> = Pair(2, 2)
 
+    var clearCalled = false
+
+    override fun clear() {
+        clearCalled = true
+    }
 }

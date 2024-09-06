@@ -7,12 +7,15 @@ interface Screen {
 
     fun show(container: Int, fragmentManager: FragmentManager)
 
-    abstract class Replace(private val fragment: Fragment) : Screen {
+    abstract class Replace(private val fragment:Class<out Fragment>) : Screen {
 
         override fun show(container: Int, fragmentManager: FragmentManager) {
             fragmentManager.beginTransaction()
-                .replace(container, fragment)
+                .replace(container, newFragment())
                 .commit()
         }
+
+        protected open fun newFragment(): Fragment = fragment.getDeclaredConstructor().newInstance()
     }
+
 }

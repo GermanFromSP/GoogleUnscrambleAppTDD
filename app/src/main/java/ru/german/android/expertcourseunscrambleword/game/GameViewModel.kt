@@ -5,6 +5,7 @@ class GameViewModel(private val repository: GameRepository) {
     fun clickNext(): GameUiState {
         repository.next()
         return if (repository.isLastQuestion()) {
+            repository.clear()
             GameUiState.Finish
         } else {
             init()
@@ -18,8 +19,9 @@ class GameViewModel(private val repository: GameRepository) {
     }
 
     fun clickSkip(): GameUiState {
-        repository.next()
+        repository.skip()
         return if (repository.isLastQuestion()) {
+            repository.clear()
             GameUiState.Finish
         } else {
             init()

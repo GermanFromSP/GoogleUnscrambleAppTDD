@@ -38,6 +38,7 @@ class GameFragment : Fragment() {
             binding.checkButton,
             binding.nextButton
         )
+        gameUiState.navigate(requireActivity() as NavigateToGameOver)
     }
 
     override fun onCreateView(
@@ -66,7 +67,6 @@ class GameFragment : Fragment() {
         binding.skipButton.setOnClickListener {
             gameUiState = viewModel.clickSkip()
             update.invoke()
-            (requireActivity() as NavigateToGameOver).navigateToGameOver()
         }
 
         gameUiState = viewModel.init(savedInstanceState == null)
