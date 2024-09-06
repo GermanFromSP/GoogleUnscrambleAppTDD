@@ -1,12 +1,9 @@
-package ru.german.android.expertcourseunscrambleword
+package ru.german.android.expertcourseunscrambleword.game
 
 import org.junit.Test
 
 import org.junit.Assert.*
 import org.junit.Before
-import ru.german.android.expertcourseunscrambleword.game.GameRepository
-import ru.german.android.expertcourseunscrambleword.game.GameUiState
-import ru.german.android.expertcourseunscrambleword.game.GameViewModel
 
 /**
  * Example local unit test, which will execute on the development machine (host).
