@@ -41,7 +41,6 @@ class CheckButton : AppCompatButton, UpdateCheckButton {
         super.onRestoreInstanceState(restoreState.superState)
         update(restoreState.restore())
     }
-
 }
 
 interface UpdateCheckButton  {
