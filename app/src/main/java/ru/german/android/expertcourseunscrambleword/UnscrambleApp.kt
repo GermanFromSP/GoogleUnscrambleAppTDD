@@ -5,6 +5,7 @@ import android.content.Context
 import ru.german.android.expertcourseunscrambleword.game.GameRepository
 import ru.german.android.expertcourseunscrambleword.game.GameViewModel
 import ru.german.android.expertcourseunscrambleword.result.GameOverViewModel
+import ru.german.android.expertcourseunscrambleword.result.StatsRepository
 import ru.german.android.expertcourseunscrambleword.views.stats.StatsUiState
 
 class UnscrambleApp : Application() {
@@ -26,6 +27,6 @@ class UnscrambleApp : Application() {
             )
         )
 
-        gameOverViewModel  = GameOverViewModel()
+//        gameOverViewModel  = GameOverViewModel(repository = StatsRepository.Base(2, 2))
     }
 }
