@@ -2,10 +2,12 @@ package ru.german.android.expertcourseunscrambleword
 
 import android.app.Application
 import android.content.Context
+import ru.german.android.expertcourseunscrambleword.views.stats.StatsUiState
 
 class UnscrambleApp : Application() {
 
     lateinit var viewModel: GameViewModel
+    lateinit var gameOverViewModel: GameOverViewModel
 
     override fun onCreate() {
         super.onCreate()
@@ -20,5 +22,11 @@ class UnscrambleApp : Application() {
                 )
             )
         )
+
+        gameOverViewModel  = GameOverViewModel()
     }
+}
+
+class GameOverViewModel {
+    val statsUiState: StatsUiState = StatsUiState.Base(1, 1)
 }

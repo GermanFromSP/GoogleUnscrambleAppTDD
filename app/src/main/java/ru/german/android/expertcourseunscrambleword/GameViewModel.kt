@@ -30,7 +30,5 @@ class GameViewModel(private val repository: GameRepository) {
         } else {
             GameUiState.Empty
         }
-
     }
-
 }

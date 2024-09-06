@@ -22,6 +22,5 @@ interface GameRepository {
             wordCaseIndex.save(wordCaseIndex.read() + 1)
             if (wordCaseIndex.read() == listOfOriginal.size) wordCaseIndex.save(0)
         }
-
     }
 }
