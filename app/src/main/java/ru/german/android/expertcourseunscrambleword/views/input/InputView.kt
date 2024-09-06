@@ -6,7 +6,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import ru.german.android.expertcourseunscrambleword.InputUiState
+import ru.german.android.expertcourseunscrambleword.game.InputUiState
 import ru.german.android.expertcourseunscrambleword.R
 import ru.german.android.expertcourseunscrambleword.databinding.InputBinding
 

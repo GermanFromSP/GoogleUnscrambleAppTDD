@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatButton
-import ru.german.android.expertcourseunscrambleword.CheckUiState
+import ru.german.android.expertcourseunscrambleword.game.CheckUiState
 
 class CheckButton : AppCompatButton, UpdateCheckButton {
 
