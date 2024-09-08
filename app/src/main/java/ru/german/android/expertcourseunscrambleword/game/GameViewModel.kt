@@ -1,11 +1,18 @@
 package ru.german.android.expertcourseunscrambleword.game
 
-class GameViewModel(private val repository: GameRepository) {
+import ru.german.android.expertcourseunscrambleword.di.ClearViewModel
+import ru.german.android.expertcourseunscrambleword.MyViewModel
+
+class GameViewModel(
+    private val clearViewModel: ClearViewModel,
+    private val repository: GameRepository
+) : MyViewModel {
 
     fun clickNext(): GameUiState {
         repository.next()
         return if (repository.isLastQuestion()) {
             repository.clear()
+            clearViewModel.clear(GameViewModel::class.java)
             GameUiState.Finish
         } else {
             init()
