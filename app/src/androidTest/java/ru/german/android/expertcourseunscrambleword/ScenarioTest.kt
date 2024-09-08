@@ -204,7 +204,7 @@ class ScenarioTest {
         gamePage.assertNotVisible()
 
         var gameOverPage = GameOverPage(correct = 5, incorrect = 0)
-        gameOverPage.assertInitialState()
+        activityScenarioRule.doWithRecreate(gameOverPage::assertInitialState)
 
         gameOverPage.clickNewGame()
         gameOverPage.assertNotVisible()
