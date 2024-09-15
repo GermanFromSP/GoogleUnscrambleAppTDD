@@ -4,6 +4,8 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import org.junit.Before
+import ru.german.android.expertcourseunscrambleword.MyViewModel
+import ru.german.android.expertcourseunscrambleword.di.ClearViewModel
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,7 +20,7 @@ class GameViewModelTest {
     @Before
     fun setup() {
         repository = FakeRepository()
-        viewModel = GameViewModel(repository = repository)
+        viewModel = GameViewModel(clearViewModel = FakeClearViewModel() , repository = repository)
     }
 
     @Test
@@ -189,5 +191,12 @@ class GameViewModelTest {
         override fun skip() {
            next()
         }
+    }
+
+    class FakeClearViewModel : ClearViewModel {
+        override fun clear(viewModelClass: Class<out MyViewModel>) {
+
+        }
+
     }
 }
