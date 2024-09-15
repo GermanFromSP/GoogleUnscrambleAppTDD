@@ -1,12 +1,12 @@
-package ru.german.android.expertcourseunscrambleword
+package ru.german.android.expertcourseunscrambleword.stats
 
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import org.hamcrest.Matcher
+import ru.german.android.expertcourseunscrambleword.R
 import ru.german.android.expertcourseunscrambleword.game.ButtonUi
 
 class GameOverPage(correct: Int, incorrect: Int) {
