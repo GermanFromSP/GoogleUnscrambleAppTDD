@@ -126,7 +126,7 @@ class ScenarioTest {
 
 
     /**
-     * Test case number 2 (UGTC - 02)
+     * Test case number 3 (UGTC - 03)
      */
 
     @Test
@@ -312,5 +312,24 @@ class ScenarioTest {
         gameOverPage.clickNewGame()
         gameOverPage.assertNotVisible()
         //endregion
+    }
+
+    /**
+     * Test case number 4 (UGTC - 04)
+     */
+
+    @Test
+    fun caseNumber4() {
+        val loadPage = LoadPage()
+
+        activityScenarioRule.doWithRecreate(loadPage::assertErrorState)
+
+        loadPage.clickRetry()
+
+        activityScenarioRule.doWithRecreate(loadPage::assertProgressState)
+
+        loadPage.waitTillGone()
+
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
     }
 }
