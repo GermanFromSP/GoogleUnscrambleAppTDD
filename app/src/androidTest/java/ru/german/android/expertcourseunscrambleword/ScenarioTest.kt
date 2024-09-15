@@ -2,12 +2,13 @@ package ru.german.android.expertcourseunscrambleword
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import ru.german.android.expertcourseunscrambleword.game.GamePage
+import ru.german.android.expertcourseunscrambleword.load.LoadPage
+import ru.german.android.expertcourseunscrambleword.stats.GameOverPage
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -40,7 +41,7 @@ class ScenarioTest {
     @Test
     fun caseNumber1() {
         // Context of the app under test.
-        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+        caseNumber4()
 
         gamePage.addInput(userAnswer = "b")
         activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
@@ -63,7 +64,7 @@ class ScenarioTest {
     @Test
     fun caseNumber2() {
         // Context of the app under test.
-        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+        caseNumber4()
 
         gamePage.clickSkip()
         gamePage = GamePage(word = "processor".reversed())
@@ -133,7 +134,7 @@ class ScenarioTest {
     fun caseNumber3() {
         //region 5 correct answers
         //first word
-        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+        caseNumber4()
 
         gamePage.addInput(userAnswer = "b")
         activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
@@ -214,7 +215,7 @@ class ScenarioTest {
         //first word
 
         gamePage = GamePage(word = "bluetooth".reversed())
-        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+        caseNumber4()
 
         gamePage.clickSkip()
         gamePage = GamePage(word = "processor".reversed())
@@ -257,7 +258,7 @@ class ScenarioTest {
         //region 2 correct 3 incorrect answers
         //first word
         gamePage = GamePage(word = "bluetooth".reversed())
-        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+        caseNumber4()
 
         gamePage.addInput(userAnswer = "b")
         activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
@@ -321,6 +322,10 @@ class ScenarioTest {
     @Test
     fun caseNumber4() {
         val loadPage = LoadPage()
+
+        activityScenarioRule.doWithRecreate(loadPage::assertProgressState)
+
+        loadPage.waitTilError()
 
         activityScenarioRule.doWithRecreate(loadPage::assertErrorState)
 
