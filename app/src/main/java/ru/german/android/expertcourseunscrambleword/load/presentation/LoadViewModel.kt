@@ -1,7 +1,7 @@
-package ru.german.android.expertcourseunscrambleword.load
+package ru.german.android.expertcourseunscrambleword.load.presentation
 
-import androidx.fragment.app.Fragment
 import ru.german.android.expertcourseunscrambleword.MyViewModel
+import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
 
 class LoadViewModel(
     private val repository: LoadRepository,

@@ -1,8 +1,8 @@
 package ru.german.android.expertcourseunscrambleword.game
 
 import ru.german.android.expertcourseunscrambleword.IntCache
-import ru.german.android.expertcourseunscrambleword.load.ParseWords
-import ru.german.android.expertcourseunscrambleword.load.StringCache
+import ru.german.android.expertcourseunscrambleword.load.data.ParseWords
+import ru.german.android.expertcourseunscrambleword.load.data.StringCache
 
 interface GameRepository {
     fun getUnscrambleWord(): String

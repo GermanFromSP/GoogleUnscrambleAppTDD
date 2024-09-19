@@ -1,17 +1,15 @@
 package ru.german.android.expertcourseunscrambleword
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.game.GameScreen
 import ru.german.android.expertcourseunscrambleword.game.NavigateToGame
+import ru.german.android.expertcourseunscrambleword.load.presentation.LoadScreen
+import ru.german.android.expertcourseunscrambleword.load.presentation.NavigateToLoad
 import ru.german.android.expertcourseunscrambleword.result.GameOverScreen
 import ru.german.android.expertcourseunscrambleword.result.NavigateToGameOver
-import java.net.HttpURLConnection
-import java.net.URL
 
 class MainActivity : AppCompatActivity(), Navigate, ProvideViewModel {
 
@@ -20,7 +18,7 @@ class MainActivity : AppCompatActivity(), Navigate, ProvideViewModel {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) navigateToGame()
+        if (savedInstanceState == null) navigateToLoad()
     }
 
     override fun navigate(screen: Screen) {
@@ -32,11 +30,13 @@ class MainActivity : AppCompatActivity(), Navigate, ProvideViewModel {
     }
 }
 
-interface Navigate : NavigateToGame, NavigateToGameOver {
+interface Navigate : NavigateToGame, NavigateToGameOver, NavigateToLoad {
 
     fun navigate(screen: Screen)
 
     override fun navigateToGame() = navigate(GameScreen)
 
     override fun navigateToGameOver() = navigate(GameOverScreen)
+
+    override fun navigateToLoad() = navigate(LoadScreen)
 }

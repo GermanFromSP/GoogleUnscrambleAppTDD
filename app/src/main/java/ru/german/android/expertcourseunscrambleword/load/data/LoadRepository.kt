@@ -1,6 +1,6 @@
-package ru.german.android.expertcourseunscrambleword.load
+package ru.german.android.expertcourseunscrambleword.load.data
 
-import androidx.core.view.ContentInfoCompat.Source
+import android.util.Log
 import com.google.gson.Gson
 import java.net.HttpURLConnection
 import java.net.URL

@@ -1,4 +1,4 @@
-package ru.german.android.expertcourseunscrambleword.load
+package ru.german.android.expertcourseunscrambleword.load.presentation
 
 import ru.german.android.expertcourseunscrambleword.Screen
 

@@ -2,6 +2,11 @@ package ru.german.android.expertcourseunscrambleword.load
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
+import ru.german.android.expertcourseunscrambleword.load.data.LoadResult
+import ru.german.android.expertcourseunscrambleword.load.presentation.LoadUiState
+import ru.german.android.expertcourseunscrambleword.load.presentation.LoadViewModel
+import ru.german.android.expertcourseunscrambleword.load.presentation.UiObservable
 
 class LoadViewModelTest {
 
