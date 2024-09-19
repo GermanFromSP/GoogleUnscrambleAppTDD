@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import ru.german.android.expertcourseunscrambleword.databinding.FragmentLoadBinding
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.game.GameViewModel
+import ru.german.android.expertcourseunscrambleword.game.NavigateToGame
 
 class LoadFragment : Fragment() {
 
@@ -20,6 +21,8 @@ class LoadFragment : Fragment() {
             binding.loadProgress,
             binding.retryButton
         )
+
+        uiState.navigate((requireActivity() as NavigateToGame))
 
     }
 
@@ -44,7 +47,7 @@ class LoadFragment : Fragment() {
             viewModel.load(true)
         }
 
-        viewModel.load(firstRun = savedInstanceState == null)
+        viewModel.load(isFirstRun = savedInstanceState == null)
 
     }
 

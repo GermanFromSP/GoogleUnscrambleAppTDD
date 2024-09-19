@@ -17,7 +17,7 @@ interface UiObservable {
             observerCached = observer
 
             if (uiStateCached != null) {
-                observerCached!!.invoke(uiStateCached)
+                observerCached!!.invoke(uiStateCached!!)
                 uiStateCached = null
             }
 

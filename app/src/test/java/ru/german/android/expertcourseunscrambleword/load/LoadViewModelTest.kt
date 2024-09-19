@@ -80,21 +80,22 @@ class LoadViewModelTest {
         assertEquals(LoadUiState.Error(message = "No internet"), newFragment.statesList.first())
         assertEquals(1, newFragment.statesList.size)
 
-        viewModel.load(isFirstRun = false)
+        viewModel.load()
+        repository.expectResult(LoadResult.Success)
         assertEquals(LoadUiState.Progress, observable.postUiStateCalledList.first())
         assertEquals(3, observable.postUiStateCalledList.size)
         assertEquals(2, repository.loadCalledCount)
 
-        viewModel.startUpdates(observer = fragment)
+        viewModel.startUpdates(observer = newFragment)
         assertEquals(3, observable.registerCalledCount)
 
-        assertEquals(LoadUiState.Progress, fragment.statesList.first())
+        assertEquals(LoadUiState.Progress, newFragment.statesList[1])
         assertEquals(2, newFragment.statesList.size)
 
         repository.returnResult()
-        assertEquals(LoadUiState.Success, observable.postUiStateCalledList[1])
+        assertEquals(LoadUiState.Success, observable.postUiStateCalledList[3])
         assertEquals(4, observable.postUiStateCalledList.size)
-        assertEquals(LoadUiState.Success, newFragment.statesList[2])
+        assertEquals(LoadUiState.Success, newFragment.statesList.last())
         assertEquals(3, newFragment.statesList.size)
 
     }
@@ -129,7 +130,7 @@ private class FakeLoadRepository : LoadRepository {
     }
 
     fun returnResult() {
-        loadResultCallback.invoke(loadResult)
+        loadResultCallback.invoke(loadResult!!)
     }
 }
 
@@ -145,10 +146,9 @@ private class FakeUiObservable : UiObservable {
         observerCached = observer
 
         if (uiStateCached != null) {
-            observerCached!!.invoke(uiStateCached)
+            observerCached!!.invoke(uiStateCached!!)
             uiStateCached = null
         }
-
     }
 
     var unregisterCalledCount = 0
@@ -170,5 +170,4 @@ private class FakeUiObservable : UiObservable {
             uiStateCached = null
         }
     }
-
 }
