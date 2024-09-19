@@ -1,5 +1,8 @@
 package ru.german.android.expertcourseunscrambleword.load
 
+import java.net.HttpURLConnection
+import java.net.URL
+
 interface UiObservable {
 
     fun register(observer: (LoadUiState) -> Unit)
@@ -15,7 +18,6 @@ interface UiObservable {
 
         override fun register(observer: (LoadUiState) -> Unit) {
             observerCached = observer
-
             if (uiStateCached != null) {
                 observerCached!!.invoke(uiStateCached!!)
                 uiStateCached = null
