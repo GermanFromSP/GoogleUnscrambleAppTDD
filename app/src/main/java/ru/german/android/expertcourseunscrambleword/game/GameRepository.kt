@@ -1,6 +1,8 @@
 package ru.german.android.expertcourseunscrambleword.game
 
 import ru.german.android.expertcourseunscrambleword.IntCache
+import ru.german.android.expertcourseunscrambleword.load.ParseWords
+import ru.german.android.expertcourseunscrambleword.load.StringCache
 
 interface GameRepository {
     fun getUnscrambleWord(): String
@@ -13,11 +15,24 @@ interface GameRepository {
     data class Base(
         private val corrects: IntCache,
         private val incorrect: IntCache,
+        private val wordCaseIndex: IntCache,
         private val listOfOriginal: List<String> = listOf(
             "bluetooth", "processor", "drone", "light", "tripple"
-        ),
-        private val wordCaseIndex: IntCache
-    ) : GameRepository {
+        )
+        ) : GameRepository {
+
+        constructor(
+            corrects: IntCache,
+            incorrect: IntCache,
+            wordCaseIndex: IntCache,
+            parseWords: ParseWords,
+            dataCache: StringCache
+        ) : this(
+            corrects,
+            incorrect,
+            wordCaseIndex,
+            parseWords.parse(dataCache.read()).result
+        )
 
         private val unscrambledList = listOfOriginal.map { it.reversed() }
 
