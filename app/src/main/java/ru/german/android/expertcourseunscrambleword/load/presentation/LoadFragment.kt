@@ -1,4 +1,4 @@
-package ru.german.android.expertcourseunscrambleword.load
+package ru.german.android.expertcourseunscrambleword.load.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.german.android.expertcourseunscrambleword.databinding.FragmentLoadBinding
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
-import ru.german.android.expertcourseunscrambleword.game.GameViewModel
 import ru.german.android.expertcourseunscrambleword.game.NavigateToGame
 
 class LoadFragment : Fragment() {
@@ -23,7 +22,6 @@ class LoadFragment : Fragment() {
         )
 
         uiState.navigate((requireActivity() as NavigateToGame))
-
     }
 
     private val binding

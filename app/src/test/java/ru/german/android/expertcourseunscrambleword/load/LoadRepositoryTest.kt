@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
+import ru.german.android.expertcourseunscrambleword.load.data.Response
 import java.net.HttpURLConnection
 import java.net.URL
 

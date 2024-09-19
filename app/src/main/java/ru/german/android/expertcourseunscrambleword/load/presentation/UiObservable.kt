@@ -1,7 +1,4 @@
-package ru.german.android.expertcourseunscrambleword.load
-
-import java.net.HttpURLConnection
-import java.net.URL
+package ru.german.android.expertcourseunscrambleword.load.presentation
 
 interface UiObservable {
 

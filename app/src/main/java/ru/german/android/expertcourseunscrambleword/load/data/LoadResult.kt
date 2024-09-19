@@ -1,4 +1,4 @@
-package ru.german.android.expertcourseunscrambleword.load
+package ru.german.android.expertcourseunscrambleword.load.data
 
 interface LoadResult {
 

@@ -1,4 +1,4 @@
-package ru.german.android.expertcourseunscrambleword.load
+package ru.german.android.expertcourseunscrambleword.load.presentation
 
 import ru.german.android.expertcourseunscrambleword.R
 import ru.german.android.expertcourseunscrambleword.game.NavigateToGame
@@ -35,7 +35,7 @@ interface LoadUiState {
     }
 
     data class Error(private val message: String) : Abstract(
-        errorUiState = ErrorUiState.Show(R.string.error_mesage),
+        errorUiState = ErrorUiState.Show(R.string.no_internet),
         retryUiState = VisibilityState.Visible,
         progressUiState = VisibilityState.Gone
     )
