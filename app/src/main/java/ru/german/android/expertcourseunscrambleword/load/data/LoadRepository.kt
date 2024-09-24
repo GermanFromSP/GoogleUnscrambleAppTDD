@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken
 
 interface LoadRepository {
 
-    fun load(): LoadResult
+   suspend fun load(): LoadResult
 
     class Base(
         private val service: WordsService,
@@ -13,7 +13,7 @@ interface LoadRepository {
         private val dataCache: StringCache,
     ) : LoadRepository {
 
-        override fun load(): LoadResult {
+        override suspend fun load(): LoadResult {
 
             try {
                 val result = service.getRandomWordList().execute()
