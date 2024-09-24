@@ -1,5 +1,9 @@
 package ru.german.android.expertcourseunscrambleword.load.presentation
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import ru.german.android.expertcourseunscrambleword.MyViewModel
 import ru.german.android.expertcourseunscrambleword.RunAsync
 import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
@@ -10,11 +14,14 @@ class LoadViewModel(
     private val runAsync: RunAsync
 ) : MyViewModel {
 
+    private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
     fun load(isFirstRun: Boolean = true) {
         if (isFirstRun) {
 
             observable.postUiState(LoadUiState.Progress)
-            runAsync.handleAsync({
+            runAsync.handleAsync(viewModelScope, {
+
                 val result = repository.load()
                 if (result.isSuccessful())
                     LoadUiState.Success
@@ -33,5 +40,4 @@ class LoadViewModel(
     fun stopUpdates() {
         observable.unregister()
     }
-
 }
