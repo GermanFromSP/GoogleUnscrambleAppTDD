@@ -46,7 +46,6 @@ class LoadFragment : Fragment() {
         }
 
         viewModel.load(isFirstRun = savedInstanceState == null)
-
     }
 
     override fun onResume() {

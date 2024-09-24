@@ -11,6 +11,8 @@ import ru.german.android.expertcourseunscrambleword.result.StatsRepository
 class GameOverModule(private val core: Core) : Module<GameOverViewModel> {
 
     override fun viewModel(): GameOverViewModel {
+
+
         return GameOverViewModel(
             clearViewModel = core.clearViewModel,
             repository = StatsRepository.Base(
