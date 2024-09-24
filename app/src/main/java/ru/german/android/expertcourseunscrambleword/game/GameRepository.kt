@@ -21,6 +21,7 @@ interface GameRepository {
         )
         ) : GameRepository {
 
+
         constructor(
             corrects: IntCache,
             incorrect: IntCache,
@@ -31,7 +32,7 @@ interface GameRepository {
             corrects,
             incorrect,
             wordCaseIndex,
-            parseWords.parse(dataCache.read()).result
+            parseWords.parse(dataCache.read())
         )
 
         private val unscrambledList = listOfOriginal.map { it.reversed() }

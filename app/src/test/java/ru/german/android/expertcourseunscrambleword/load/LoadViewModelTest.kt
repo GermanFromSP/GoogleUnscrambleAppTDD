@@ -1,7 +1,9 @@
 package ru.german.android.expertcourseunscrambleword.load
 
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
+import ru.german.android.expertcourseunscrambleword.RunAsync
 import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
 import ru.german.android.expertcourseunscrambleword.load.data.LoadResult
 import ru.german.android.expertcourseunscrambleword.load.presentation.LoadUiState
@@ -10,16 +12,22 @@ import ru.german.android.expertcourseunscrambleword.load.presentation.UiObservab
 
 class LoadViewModelTest {
 
+    private lateinit var repository: FakeLoadRepository
+    private lateinit var observable: FakeUiObservable
+    private lateinit var runAsync: FakeRunAsync
+    private lateinit var viewModel: LoadViewModel
+
+    @Before
+    fun setup() {
+        repository = FakeLoadRepository()
+        observable = FakeUiObservable()
+        runAsync = FakeRunAsync()
+        viewModel = LoadViewModel(repository, observable, runAsync)
+    }
+
     @Test
     fun sameFragment() {
-        val repository = FakeLoadRepository()
         repository.expectResult(LoadResult.Success)
-        val observable = FakeUiObservable()
-        val viewModel = LoadViewModel(
-            repository = repository,
-            observable = observable
-        )
-
         val fragment = FakeFragment()
 
         viewModel.load(isFirstRun = true)
@@ -33,7 +41,7 @@ class LoadViewModelTest {
         assertEquals(LoadUiState.Progress, fragment.statesList.first())
         assertEquals(1, fragment.statesList.size)
 
-        repository.returnResult()
+        runAsync.returnResult()
         assertEquals(LoadUiState.Success, observable.postUiStateCalledList[1])
         assertEquals(2, observable.postUiStateCalledList.size)
         assertEquals(LoadUiState.Success, fragment.statesList[1])
@@ -42,14 +50,7 @@ class LoadViewModelTest {
 
     @Test
     fun recreateActivity() {
-        val repository = FakeLoadRepository()
         repository.expectResult(LoadResult.Error(message = "No internet"))
-        val observable = FakeUiObservable()
-        val viewModel = LoadViewModel(
-            repository = repository,
-            observable = observable
-        )
-
         val fragment = FakeFragment()
 
         viewModel.load(isFirstRun = true)
@@ -66,7 +67,7 @@ class LoadViewModelTest {
         viewModel.stopUpdates()
         assertEquals(1, observable.unregisterCalledCount)
 
-        repository.returnResult()
+        runAsync.returnResult()
         assertEquals(1, fragment.statesList.size)
         assertEquals(
             LoadUiState.Error(message = "No internet"),
@@ -75,6 +76,7 @@ class LoadViewModelTest {
         assertEquals(2, observable.postUiStateCalledList.size)
 
         val newFragment = FakeFragment()
+        repository.expectResult(LoadResult.Success)
 
         viewModel.load(isFirstRun = false)
         assertEquals(1, repository.loadCalledCount)
@@ -86,7 +88,7 @@ class LoadViewModelTest {
         assertEquals(1, newFragment.statesList.size)
 
         viewModel.load()
-        repository.expectResult(LoadResult.Success)
+
         assertEquals(LoadUiState.Progress, observable.postUiStateCalledList.first())
         assertEquals(3, observable.postUiStateCalledList.size)
         assertEquals(2, repository.loadCalledCount)
@@ -97,7 +99,7 @@ class LoadViewModelTest {
         assertEquals(LoadUiState.Progress, newFragment.statesList[1])
         assertEquals(2, newFragment.statesList.size)
 
-        repository.returnResult()
+        runAsync.returnResult()
         assertEquals(LoadUiState.Success, observable.postUiStateCalledList[3])
         assertEquals(4, observable.postUiStateCalledList.size)
         assertEquals(LoadUiState.Success, newFragment.statesList.last())
@@ -118,7 +120,6 @@ private class FakeFragment : (LoadUiState) -> Unit {
 private class FakeLoadRepository : LoadRepository {
 
     private var loadResult: LoadResult? = null
-    private var loadResultCallback: (LoadResult) -> Unit = {}
 
     fun expectResult(loadResult: LoadResult) {
         this.loadResult = loadResult
@@ -127,15 +128,11 @@ private class FakeLoadRepository : LoadRepository {
 
     var loadCalledCount = 0
 
-    override fun load(resultCallback: (LoadResult) -> Unit) {
+    override fun load(): LoadResult {
 
         loadCalledCount++
-        loadResultCallback = resultCallback
+        return loadResult!!
 
-    }
-
-    fun returnResult() {
-        loadResultCallback.invoke(loadResult!!)
     }
 }
 
@@ -174,5 +171,20 @@ private class FakeUiObservable : UiObservable {
             observerCached!!.invoke(uiState)
             uiStateCached = null
         }
+    }
+}
+
+private class FakeRunAsync() : RunAsync {
+
+    private var result: Any? = null
+    private var ui: (Any) -> Unit = {}
+
+    override fun <T : Any> handleAsync(heavyOperation: () -> T, uiUpdate: (T) -> Unit) {
+        result = heavyOperation.invoke()
+        ui = uiUpdate as (Any) -> Unit
+    }
+
+    fun returnResult() {
+        ui.invoke(result!!)
     }
 }

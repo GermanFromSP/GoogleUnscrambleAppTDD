@@ -1,6 +1,7 @@
 package ru.german.android.expertcourseunscrambleword.load.di
 
 import com.google.gson.Gson
+import ru.german.android.expertcourseunscrambleword.RunAsync
 import ru.german.android.expertcourseunscrambleword.di.AbstractProvideViewModel
 import ru.german.android.expertcourseunscrambleword.di.Core
 import ru.german.android.expertcourseunscrambleword.di.Module
@@ -28,7 +29,8 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
                 ParseWords.Base(Gson()),
                 StringCache.Base(core.sharedPreferences, "response_data", defaultResponse)
             ),
-            observable = UiObservable.Base()
+            observable = UiObservable.Base(),
+            runAsync = RunAsync.Base()
         )
     }
 }
