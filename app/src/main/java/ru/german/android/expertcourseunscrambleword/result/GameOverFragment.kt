@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.databinding.GameOverBinding
 import ru.german.android.expertcourseunscrambleword.game.NavigateToGame
+import ru.german.android.expertcourseunscrambleword.load.presentation.NavigateToLoad
 
 class GameOverFragment : Fragment() {
 
@@ -32,7 +33,7 @@ class GameOverFragment : Fragment() {
 
         binding.newGameButton.setOnClickListener {
             viewModel.clear()
-            (requireActivity() as NavigateToGame).navigateToGame()
+            (requireActivity() as NavigateToLoad).navigateToLoad()
         }
     }
 
