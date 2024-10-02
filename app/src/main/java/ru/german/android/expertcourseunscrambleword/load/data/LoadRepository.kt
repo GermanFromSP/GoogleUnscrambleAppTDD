@@ -2,10 +2,26 @@ package ru.german.android.expertcourseunscrambleword.load.data
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.delay
 
 interface LoadRepository {
 
    suspend fun load(): LoadResult
+
+    class Fake() : LoadRepository {
+
+        private var count = 0
+
+        override suspend fun load(): LoadResult {
+            delay(3000)
+            return if (count == 0) {
+                count++
+                LoadResult.Error("Empty data, try again later")
+            } else {
+                LoadResult.Success
+            }
+        }
+    }
 
     class Base(
         private val service: WordsService,
@@ -30,27 +46,6 @@ interface LoadRepository {
                 e.printStackTrace()
                 return LoadResult.Error("Empty data, try again later")
             }
-
-
-//            val connection = URL(url).openConnection() as HttpURLConnection
-//            try {
-//                val data = connection.inputStream.bufferedReader().use { it.readText() }
-//                val response = parseWords.parse(data)
-//
-//                if (response.isEmpty())
-//                    return LoadResult.Error("Empty data, try again later")
-//                else {
-//                    dataCache.save(data)
-//                    return LoadResult.Success
-//                }
-//
-//
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                return LoadResult.Error(e.message.toString())
-//            } finally {
-//                connection.disconnect()
-//            }
         }
     }
 }

@@ -6,12 +6,14 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import ru.german.android.expertcourseunscrambleword.MyViewModel
 import ru.german.android.expertcourseunscrambleword.RunAsync
+import ru.german.android.expertcourseunscrambleword.di.ClearViewModel
 import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
 
 class LoadViewModel(
     private val repository: LoadRepository,
     private val observable: UiObservable,
-    private val runAsync: RunAsync
+    private val runAsync: RunAsync,
+    private val clearViewModel: ClearViewModel
 ) : MyViewModel {
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -23,8 +25,10 @@ class LoadViewModel(
             runAsync.handleAsync(viewModelScope, {
 
                 val result = repository.load()
-                if (result.isSuccessful())
+                if (result.isSuccessful()) {
+                    clearViewModel.clear(LoadViewModel::class.java)
                     LoadUiState.Success
+                }
                 else
                     LoadUiState.Error(result.message())
             }) {

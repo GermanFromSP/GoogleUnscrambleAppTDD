@@ -20,7 +20,19 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
 
         return GameViewModel(
             clearViewModel = core.clearViewModel,
-            repository = GameRepository.Base(
+            repository =
+                if (core.runUiTests)
+                    GameRepository.Base(
+                        corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
+                        incorrect = IntCache.Base(core.sharedPreferences, "incorrect", 0),
+                        wordCaseIndex = IntCache.Base(
+                            sharedPreferences = core.sharedPreferences,
+                            key = "unscrambleWordIndex",
+                            defaultValue = 0
+                        )
+                    )
+                            else
+            GameRepository.Base(
                 corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
                 incorrect = IntCache.Base(core.sharedPreferences, "incorrect", 0),
                 wordCaseIndex = IntCache.Base(

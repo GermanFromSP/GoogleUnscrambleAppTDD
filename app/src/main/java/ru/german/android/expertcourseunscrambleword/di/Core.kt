@@ -6,6 +6,8 @@ import com.google.gson.Gson
 
 class Core(private val context: Context, val clearViewModel: ClearViewModel) {
 
+    var runUiTests = true
+
     val sharedPreferences: SharedPreferences = context
         .getSharedPreferences("unscrambleAppData", Context.MODE_PRIVATE)
 

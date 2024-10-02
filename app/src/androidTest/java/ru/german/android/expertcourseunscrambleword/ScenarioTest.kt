@@ -257,6 +257,7 @@ class ScenarioTest {
 
         //region 2 correct 3 incorrect answers
         //first word
+
         gamePage = GamePage(word = "bluetooth".reversed())
         caseNumber4()
 

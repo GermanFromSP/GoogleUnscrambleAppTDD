@@ -6,6 +6,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ru.german.android.expertcourseunscrambleword.RunAsync
+import ru.german.android.expertcourseunscrambleword.di.ClearViewModel
+import ru.german.android.expertcourseunscrambleword.game.GameViewModelTest
 import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
 import ru.german.android.expertcourseunscrambleword.load.data.LoadResult
 import ru.german.android.expertcourseunscrambleword.load.presentation.LoadUiState
@@ -18,13 +20,15 @@ class LoadViewModelTest {
     private lateinit var observable: FakeUiObservable
     private lateinit var runAsync: FakeRunAsync
     private lateinit var viewModel: LoadViewModel
+    private lateinit var clearViewModel: GameViewModelTest.FakeClearViewModel
 
     @Before
     fun setup() {
         repository = FakeLoadRepository()
         observable = FakeUiObservable()
         runAsync = FakeRunAsync()
-        viewModel = LoadViewModel(repository, observable, runAsync)
+        clearViewModel = GameViewModelTest.FakeClearViewModel()
+        viewModel = LoadViewModel(repository, observable, runAsync, clearViewModel)
     }
 
     @Test
@@ -48,6 +52,7 @@ class LoadViewModelTest {
         assertEquals(2, observable.postUiStateCalledList.size)
         assertEquals(LoadUiState.Success, fragment.statesList[1])
         assertEquals(2, fragment.statesList.size)
+        clearViewModel.assertClearCalled(LoadViewModel::class.java)
     }
 
     @Test
@@ -182,7 +187,7 @@ private class FakeRunAsync() : RunAsync {
     private var ui: (Any) -> Unit = {}
 
     override fun <T : Any> handleAsync(
-        coroutineScope: CoroutineScope ,
+        coroutineScope: CoroutineScope,
         heavyOperation: suspend () -> T,
         uiUpdate: (T) -> Unit
     ) = runBlocking {
