@@ -3,6 +3,7 @@ package ru.german.android.expertcourseunscrambleword.load.data
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.delay
+import ru.german.android.expertcourseunscrambleword.load.net.WordsService
 
 interface LoadRepository {
 

@@ -1,4 +1,4 @@
-package ru.german.android.expertcourseunscrambleword.load.data
+package ru.german.android.expertcourseunscrambleword.load.net
 
 import retrofit2.Call
 import retrofit2.http.GET

@@ -12,9 +12,16 @@ activity = "1.9.1"
 constraintlayout = "2.1.4"
 gson = "2.11.0"
 retrofit = "2.11.0"
+room = "2.6.1"
+roomKtx = "2.6.1"
+ksp="1.9.22-1.0.16"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+room-core = { group = "androidx.room", name="room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name="room-compiler", version.ref = "room" }
+room-testing = { group = "androidx.room", name="room-testing", version.ref = "room" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -30,4 +37,5 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = {id="com.google.devtools.ksp", version.ref="ksp"}
 
