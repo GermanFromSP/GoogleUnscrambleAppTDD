@@ -4,7 +4,7 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import org.junit.Before
-import ru.german.android.expertcourseunscrambleword.MyViewModel
+import ru.german.android.expertcourseunscrambleword.core.MyViewModel
 import ru.german.android.expertcourseunscrambleword.di.ClearViewModel
 
 /**
@@ -172,9 +172,9 @@ class GameViewModelTest {
 
         private var wordCaseIndex: Int = 0
 
-        override fun getUnscrambleWord(): String = unscrambledList[wordCaseIndex]
+        override suspend fun getUnscrambleWord(): String = unscrambledList[wordCaseIndex]
 
-        override fun getOriginalWord(): String = originalList[wordCaseIndex]
+        override suspend fun getOriginalWord(): String = originalList[wordCaseIndex]
 
         override fun next() {
             wordCaseIndex++

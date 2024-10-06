@@ -1,8 +1,8 @@
 package ru.german.android.expertcourseunscrambleword.di
 
-import ru.german.android.expertcourseunscrambleword.MyViewModel
+import ru.german.android.expertcourseunscrambleword.core.MyViewModel
 
 interface ClearViewModel {
 
-    fun clear(viewModelClass: Class<out MyViewModel>)
+    fun clear(viewModelClass: Class<out MyViewModel<*>>)
 }

@@ -1,7 +1,7 @@
 package ru.german.android.expertcourseunscrambleword.result
 
 import ru.german.android.expertcourseunscrambleword.di.ClearViewModel
-import ru.german.android.expertcourseunscrambleword.MyViewModel
+import ru.german.android.expertcourseunscrambleword.core.MyViewModel
 import ru.german.android.expertcourseunscrambleword.views.stats.StatsUiState
 
 

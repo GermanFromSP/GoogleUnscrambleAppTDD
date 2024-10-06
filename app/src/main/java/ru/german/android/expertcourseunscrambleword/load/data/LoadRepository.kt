@@ -1,7 +1,5 @@
 package ru.german.android.expertcourseunscrambleword.load.data
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.delay
 import ru.german.android.expertcourseunscrambleword.load.cache.WordsCache
 import ru.german.android.expertcourseunscrambleword.load.cache.WordsDao
@@ -28,13 +26,14 @@ interface LoadRepository {
 
     class Base(
         private val service: WordsService,
-        private val dao: WordsDao
+        private val dao: WordsDao,
+        private val size: Int
     ) : LoadRepository {
 
         override suspend fun load(): LoadResult {
 
             try {
-                val result = service.getRandomWordList().execute()
+                val result = service.getRandomWordList(size).execute()
                 val body = result.body()!!
 
                 if (result.isSuccessful) {

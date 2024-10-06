@@ -1,6 +1,6 @@
 package ru.german.android.expertcourseunscrambleword.result.di
 
-import ru.german.android.expertcourseunscrambleword.IntCache
+import ru.german.android.expertcourseunscrambleword.core.IntCache
 import ru.german.android.expertcourseunscrambleword.di.AbstractProvideViewModel
 import ru.german.android.expertcourseunscrambleword.di.Core
 import ru.german.android.expertcourseunscrambleword.di.Module

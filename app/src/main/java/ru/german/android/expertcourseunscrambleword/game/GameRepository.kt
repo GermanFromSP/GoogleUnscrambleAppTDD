@@ -1,46 +1,56 @@
 package ru.german.android.expertcourseunscrambleword.game
 
-import ru.german.android.expertcourseunscrambleword.IntCache
+import ru.german.android.expertcourseunscrambleword.core.IntCache
 import ru.german.android.expertcourseunscrambleword.load.cache.ClearDatabase
 import ru.german.android.expertcourseunscrambleword.load.cache.WordsDao
 
 interface GameRepository {
-    fun getUnscrambleWord(): String
-    fun getOriginalWord(): String
+    suspend fun getUnscrambleWord(): String
+    suspend fun getOriginalWord(): String
     fun next()
     fun isLastQuestion(): Boolean
-    fun clear()
-    fun skip()
+    suspend fun clear()
+     fun skip()
 
     class Base(
         private val corrects: IntCache,
         private val incorrect: IntCache,
         private val wordCaseIndex: IntCache,
         private val dao: WordsDao,
-        private val clearDatabase: ClearDatabase
+        private val clearDatabase: ClearDatabase,
+        private val size : Int
     ) : GameRepository {
-        override fun getUnscrambleWord(): String {
-            TODO("Not yet implemented")
+
+        override suspend fun getUnscrambleWord(): String {
+            val id = wordCaseIndex.read()
+            return dao.getWord(id).word.toCharArray().shuffle().toString()
         }
 
-        override fun getOriginalWord(): String {
-            TODO("Not yet implemented")
+        override suspend fun getOriginalWord(): String {
+            val id = wordCaseIndex.read()
+            return dao.getWord(id).word
         }
 
         override fun next() {
-            TODO("Not yet implemented")
+            corrects.save(corrects.read() + 1)
+            wordCaseIndex.save(wordCaseIndex.read() + 1)
         }
 
         override fun isLastQuestion(): Boolean {
-            TODO("Not yet implemented")
+           return wordCaseIndex.read() == size
         }
 
-        override fun clear() {
-            TODO("Not yet implemented")
+        override suspend fun clear() {
+            wordCaseIndex.save(0)
+            clearDatabase.clear()
         }
 
-        override fun skip() {
-            TODO("Not yet implemented")
+        override suspend fun skip() {
+            if (!isLastQuestion()) {
+                wordCaseIndex.save(wordCaseIndex.read() + 1)
+            }
+            incorrect.save(incorrect.read() + 1)
+
         }
 
     }
@@ -57,9 +67,9 @@ interface GameRepository {
 
         private val unscrambledList = listOfOriginal.map { it.reversed() }
 
-        override fun getUnscrambleWord(): String = unscrambledList[wordCaseIndex.read()]
+        override suspend fun getUnscrambleWord(): String = unscrambledList[wordCaseIndex.read()]
 
-        override fun getOriginalWord(): String = listOfOriginal[wordCaseIndex.read()]
+        override suspend fun getOriginalWord(): String = listOfOriginal[wordCaseIndex.read()]
 
         override fun next() {
 
@@ -71,11 +81,11 @@ interface GameRepository {
         }
 
         override fun isLastQuestion(): Boolean = wordCaseIndex.read() == listOfOriginal.size
-        override fun clear() {
+        override suspend fun clear() {
             wordCaseIndex.save(0)
         }
 
-        override fun skip() {
+        override suspend fun skip() {
             if (!isLastQuestion()) {
                 wordCaseIndex.save(wordCaseIndex.read() + 1)
             }

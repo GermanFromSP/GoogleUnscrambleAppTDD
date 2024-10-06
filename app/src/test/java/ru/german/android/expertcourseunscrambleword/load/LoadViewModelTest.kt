@@ -5,8 +5,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import ru.german.android.expertcourseunscrambleword.RunAsync
-import ru.german.android.expertcourseunscrambleword.di.ClearViewModel
+import ru.german.android.expertcourseunscrambleword.core.RunAsync
 import ru.german.android.expertcourseunscrambleword.game.GameViewModelTest
 import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
 import ru.german.android.expertcourseunscrambleword.load.data.LoadResult

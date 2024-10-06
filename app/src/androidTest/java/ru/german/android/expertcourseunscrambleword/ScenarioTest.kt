@@ -6,6 +6,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.german.android.expertcourseunscrambleword.core.MainActivity
 import ru.german.android.expertcourseunscrambleword.game.GamePage
 import ru.german.android.expertcourseunscrambleword.load.LoadPage
 import ru.german.android.expertcourseunscrambleword.stats.GameOverPage

@@ -1,13 +1,13 @@
 package ru.german.android.expertcourseunscrambleword.di
 
-import ru.german.android.expertcourseunscrambleword.MyViewModel
+import ru.german.android.expertcourseunscrambleword.core.MyViewModel
 import ru.german.android.expertcourseunscrambleword.game.di.ProvideGameViewModel
 import ru.german.android.expertcourseunscrambleword.load.di.ProvideLoadViewModel
 import ru.german.android.expertcourseunscrambleword.result.di.ProvideGameOverViewModel
 
 interface ProvideViewModel {
 
-    fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T
+    fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T
 
 
     class Make(
@@ -23,7 +23,7 @@ interface ProvideViewModel {
             chain = ProvideGameOverViewModel(core, chain)
         }
 
-        override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T {
+        override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T {
             return chain.makeViewModel(clazz)
         }
     }
@@ -31,7 +31,7 @@ interface ProvideViewModel {
 
     class Error : ProvideViewModel {
 
-        override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T {
+        override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T {
             throw IllegalStateException("unknown class $clazz")
         }
     }

@@ -8,7 +8,7 @@ interface WordsService {
 
     @GET("api")
     fun getRandomWordList(
-        @Query("words") listSize: Int = 10,
+        @Query("words") listSize: Int,
     ): Call<List<String>>
 
 }

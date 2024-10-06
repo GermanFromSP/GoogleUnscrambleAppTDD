@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import ru.german.android.expertcourseunscrambleword.core.AbstractFragment
 import ru.german.android.expertcourseunscrambleword.databinding.FragmentLoadBinding
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.game.NavigateToGame
 
-class LoadFragment : Fragment() {
+class LoadFragment : AbstractFragment<LoadUiState, LoadViewModel>() {
 
     private var _binding: FragmentLoadBinding? = null
-    private lateinit var viewModel: LoadViewModel
 
-    private val update: (LoadUiState) -> Unit = { uiState ->
+    override val update: (LoadUiState) -> Unit = { uiState ->
         uiState.show(
             binding.errorTextView,
             binding.loadProgress,
@@ -48,15 +48,7 @@ class LoadFragment : Fragment() {
         viewModel.load(isFirstRun = savedInstanceState == null)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.startUpdates(observer = update)
-    }
 
-    override fun onPause() {
-        super.onPause()
-        viewModel.stopUpdates()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
