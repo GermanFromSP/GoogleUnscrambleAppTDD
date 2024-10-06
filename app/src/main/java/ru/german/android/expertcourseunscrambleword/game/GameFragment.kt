@@ -7,15 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import ru.german.android.expertcourseunscrambleword.core.AbstractFragment
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.databinding.GameFragmentBinding
 import ru.german.android.expertcourseunscrambleword.result.NavigateToGameOver
 
-class GameFragment : Fragment() {
-
-
-    private lateinit var gameUiState: GameUiState
-    private lateinit var viewModel: GameViewModel
+class GameFragment : AbstractFragment<GameUiState, GameViewModel>() {
 
     private var _binding: GameFragmentBinding? = null
     private val binding get() = _binding!!
@@ -25,20 +22,19 @@ class GameFragment : Fragment() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
 
         override fun afterTextChanged(s: Editable?) {
-            gameUiState = viewModel.checkSufficient(text = s.toString())
-            update.invoke()
+            viewModel.checkSufficient(text = s.toString())
         }
     }
 
-    private val update: () -> Unit = {
-        gameUiState.update(
+    override val update: (GameUiState) -> Unit = { uiState ->
+        uiState.update(
             binding.scrambledWordTextView,
             binding.inputView,
             binding.skipButton,
             binding.checkButton,
             binding.nextButton
         )
-        gameUiState.navigate(requireActivity() as NavigateToGameOver)
+        uiState.navigate(requireActivity() as NavigateToGameOver)
     }
 
     override fun onCreateView(
@@ -56,22 +52,21 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.nextButton.setOnClickListener {
-            gameUiState = viewModel.clickNext()
-            update.invoke()
+            viewModel.clickNext()
         }
 
         binding.checkButton.setOnClickListener {
-            gameUiState = viewModel.clickCheck(text = binding.inputView.text())
-            update.invoke()
+            viewModel.clickCheck(text = binding.inputView.text())
+
         }
 
         binding.skipButton.setOnClickListener {
-            gameUiState = viewModel.clickSkip()
-            update.invoke()
+            viewModel.clickSkip()
+
         }
 
-        gameUiState = viewModel.init(savedInstanceState == null)
-        update.invoke()
+        viewModel.init(savedInstanceState == null)
+
     }
 
     override fun onResume() {

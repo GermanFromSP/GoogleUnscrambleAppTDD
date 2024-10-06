@@ -1,19 +1,17 @@
 package ru.german.android.expertcourseunscrambleword.load.di
 
-import com.google.gson.Gson
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.german.android.expertcourseunscrambleword.RunAsync
+import ru.german.android.expertcourseunscrambleword.core.RunAsync
 import ru.german.android.expertcourseunscrambleword.di.AbstractProvideViewModel
 import ru.german.android.expertcourseunscrambleword.di.Core
 import ru.german.android.expertcourseunscrambleword.di.Module
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
-import ru.german.android.expertcourseunscrambleword.load.data.ParseWords
 import ru.german.android.expertcourseunscrambleword.load.data.Response
 import ru.german.android.expertcourseunscrambleword.load.net.WordsService
+import ru.german.android.expertcourseunscrambleword.load.presentation.LoadUiObservable
 import ru.german.android.expertcourseunscrambleword.load.presentation.LoadViewModel
-import ru.german.android.expertcourseunscrambleword.load.presentation.UiObservable
 
 class ProvideLoadViewModel(core: Core, next: ProvideViewModel) :
     AbstractProvideViewModel(core, next, LoadViewModel::class.java) {
@@ -38,10 +36,10 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
             else
                 LoadRepository.Base(
                     service,
-                    ParseWords.Base(Gson()),
-                    StringCache.Base(core.sharedPreferences, "response_data", defaultResponse)
+                    core.cacheModule.dao(),
+                    core.size
                 ),
-            observable = UiObservable.Base(),
+            observable = LoadUiObservable.Abstract(),
             runAsync = RunAsync.Base(),
             core.clearViewModel
         )

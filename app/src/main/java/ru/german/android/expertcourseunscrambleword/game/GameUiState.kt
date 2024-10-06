@@ -27,18 +27,6 @@ interface GameUiState {
         override fun navigate(navigate: NavigateToGameOver) = navigate.navigateToGameOver()
     }
 
-    object Empty : GameUiState {
-
-        override fun update(
-            questionTextView: UpdateText,
-            inputView: UpdateInput,
-            skip: UpdateVisibility,
-            check: UpdateCheckButton,
-            next: UpdateVisibility
-        ) = Unit
-
-
-    }
 
     abstract class Abstract(
 

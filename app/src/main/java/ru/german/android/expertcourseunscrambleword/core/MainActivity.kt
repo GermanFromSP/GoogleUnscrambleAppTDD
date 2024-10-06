@@ -1,8 +1,9 @@
-package ru.german.android.expertcourseunscrambleword
+package ru.german.android.expertcourseunscrambleword.core
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import ru.german.android.expertcourseunscrambleword.R
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.game.GameScreen
 import ru.german.android.expertcourseunscrambleword.game.NavigateToGame
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), Navigate, ProvideViewModel {
         screen.show(R.id.container, supportFragmentManager)
     }
 
-    override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T {
+    override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T {
       return (application as UnscrambleApp).makeViewModel(clazz)
     }
 }

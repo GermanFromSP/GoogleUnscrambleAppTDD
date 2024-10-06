@@ -1,6 +1,6 @@
 package ru.german.android.expertcourseunscrambleword.result
 
-import ru.german.android.expertcourseunscrambleword.IntCache
+import ru.german.android.expertcourseunscrambleword.core.IntCache
 
 interface StatsRepository {
     fun stats(): Pair<Int, Int>
