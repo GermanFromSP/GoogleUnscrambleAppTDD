@@ -7,9 +7,7 @@ import ru.german.android.expertcourseunscrambleword.di.Module
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.game.GameRepository
 import ru.german.android.expertcourseunscrambleword.game.GameViewModel
-import ru.german.android.expertcourseunscrambleword.load.data.ParseWords
 import ru.german.android.expertcourseunscrambleword.load.data.Response
-import ru.german.android.expertcourseunscrambleword.load.data.StringCache
 
 class GameModule(private val core: Core) : Module<GameViewModel> {
 
@@ -21,32 +19,28 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
         return GameViewModel(
             clearViewModel = core.clearViewModel,
             repository =
-                if (core.runUiTests)
-                    GameRepository.Base(
-                        corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
-                        incorrect = IntCache.Base(core.sharedPreferences, "incorrect", 0),
-                        wordCaseIndex = IntCache.Base(
-                            sharedPreferences = core.sharedPreferences,
-                            key = "unscrambleWordIndex",
-                            defaultValue = 0
-                        )
+            if (core.runUiTests)
+                GameRepository.Fake(
+                    corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
+                    incorrect = IntCache.Base(core.sharedPreferences, "incorrect", 0),
+                    wordCaseIndex = IntCache.Base(
+                        sharedPreferences = core.sharedPreferences,
+                        key = "unscrambleWordIndex",
+                        defaultValue = 0
                     )
-                            else
-            GameRepository.Base(
-                corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
-                incorrect = IntCache.Base(core.sharedPreferences, "incorrect", 0),
-                wordCaseIndex = IntCache.Base(
-                    sharedPreferences = core.sharedPreferences,
-                    key = "unscrambleWordIndex",
-                    defaultValue = 0
-                ),
-                parseWords = ParseWords.Base(core.gson),
-                dataCache = StringCache.Base(
-                    core.sharedPreferences,
-                    "response_data",
-                    defaultResponse
                 )
-            )
+            else
+                GameRepository.Base(
+                    corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
+                    incorrect = IntCache.Base(core.sharedPreferences, "incorrect", 0),
+                    wordCaseIndex = IntCache.Base(
+                        sharedPreferences = core.sharedPreferences,
+                        key = "unscrambleWordIndex",
+                        defaultValue = 0
+                    ),
+                    dao = core.cacheModule.dao(),
+                    clearDatabase = core.cacheModule.clearDatabase()
+                )
         )
     }
 }
