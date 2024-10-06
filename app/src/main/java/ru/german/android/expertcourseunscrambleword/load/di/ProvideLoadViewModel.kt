@@ -11,7 +11,6 @@ import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.load.data.LoadRepository
 import ru.german.android.expertcourseunscrambleword.load.data.ParseWords
 import ru.german.android.expertcourseunscrambleword.load.data.Response
-import ru.german.android.expertcourseunscrambleword.load.data.StringCache
 import ru.german.android.expertcourseunscrambleword.load.net.WordsService
 import ru.german.android.expertcourseunscrambleword.load.presentation.LoadViewModel
 import ru.german.android.expertcourseunscrambleword.load.presentation.UiObservable

@@ -3,11 +3,13 @@ package ru.german.android.expertcourseunscrambleword.load.data
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.delay
+import ru.german.android.expertcourseunscrambleword.load.cache.WordsCache
+import ru.german.android.expertcourseunscrambleword.load.cache.WordsDao
 import ru.german.android.expertcourseunscrambleword.load.net.WordsService
 
 interface LoadRepository {
 
-   suspend fun load(): LoadResult
+    suspend fun load(): LoadResult
 
     class Fake() : LoadRepository {
 
@@ -26,18 +28,20 @@ interface LoadRepository {
 
     class Base(
         private val service: WordsService,
-        private val parseWords: ParseWords,
-        private val dataCache: StringCache,
+        private val dao: WordsDao
     ) : LoadRepository {
 
         override suspend fun load(): LoadResult {
 
             try {
                 val result = service.getRandomWordList().execute()
-                val data = parseWords.parse(result.body()!!.toString()).toString()
+                val body = result.body()!!
 
                 if (result.isSuccessful) {
-                    dataCache.save(data)
+                    val data = body.mapIndexed { index, word ->
+                        WordsCache(id = index, word = word)
+                    }
+                    dao.saveWords(data)
                     return LoadResult.Success
                 } else {
                     return LoadResult.Error("Empty data, try again later")
@@ -47,21 +51,6 @@ interface LoadRepository {
                 e.printStackTrace()
                 return LoadResult.Error("Empty data, try again later")
             }
-        }
-    }
-}
-
-interface ParseWords {
-
-    fun parse(source: String): List<String>
-
-    class Base(
-        private val gson: Gson
-    ) : ParseWords {
-
-        override fun parse(source: String): List<String> {
-            val data = object : TypeToken<List<String>>() {}.type
-            return gson.fromJson(source, data)
         }
     }
 }

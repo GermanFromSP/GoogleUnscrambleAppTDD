@@ -1,8 +1,8 @@
 package ru.german.android.expertcourseunscrambleword.game
 
 import ru.german.android.expertcourseunscrambleword.IntCache
-import ru.german.android.expertcourseunscrambleword.load.data.ParseWords
-import ru.german.android.expertcourseunscrambleword.load.data.StringCache
+import ru.german.android.expertcourseunscrambleword.load.cache.ClearDatabase
+import ru.german.android.expertcourseunscrambleword.load.cache.WordsDao
 
 interface GameRepository {
     fun getUnscrambleWord(): String
@@ -12,28 +12,48 @@ interface GameRepository {
     fun clear()
     fun skip()
 
-    data class Base(
+    class Base(
+        private val corrects: IntCache,
+        private val incorrect: IntCache,
+        private val wordCaseIndex: IntCache,
+        private val dao: WordsDao,
+        private val clearDatabase: ClearDatabase
+    ) : GameRepository {
+        override fun getUnscrambleWord(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun getOriginalWord(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun next() {
+            TODO("Not yet implemented")
+        }
+
+        override fun isLastQuestion(): Boolean {
+            TODO("Not yet implemented")
+        }
+
+        override fun clear() {
+            TODO("Not yet implemented")
+        }
+
+        override fun skip() {
+            TODO("Not yet implemented")
+        }
+
+    }
+
+    data class Fake(
         private val corrects: IntCache,
         private val incorrect: IntCache,
         private val wordCaseIndex: IntCache,
         private val listOfOriginal: List<String> = listOf(
             "bluetooth", "processor", "drone", "light", "tripple"
         )
-        ) : GameRepository {
+    ) : GameRepository {
 
-
-        constructor(
-            corrects: IntCache,
-            incorrect: IntCache,
-            wordCaseIndex: IntCache,
-            parseWords: ParseWords,
-            dataCache: StringCache
-        ) : this(
-            corrects,
-            incorrect,
-            wordCaseIndex,
-            parseWords.parse(dataCache.read())
-        )
 
         private val unscrambledList = listOfOriginal.map { it.reversed() }
 
