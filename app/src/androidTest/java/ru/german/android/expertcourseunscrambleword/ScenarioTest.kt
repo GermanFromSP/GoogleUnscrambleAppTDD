@@ -2,12 +2,14 @@ package ru.german.android.expertcourseunscrambleword
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.german.android.expertcourseunscrambleword.core.MainActivity
 import ru.german.android.expertcourseunscrambleword.game.GamePage
+import ru.german.android.expertcourseunscrambleword.load.LoadPage
+import ru.german.android.expertcourseunscrambleword.stats.GameOverPage
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -40,7 +42,7 @@ class ScenarioTest {
     @Test
     fun caseNumber1() {
         // Context of the app under test.
-        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+        caseNumber4()
 
         gamePage.addInput(userAnswer = "b")
         activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
@@ -63,7 +65,7 @@ class ScenarioTest {
     @Test
     fun caseNumber2() {
         // Context of the app under test.
-        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+        caseNumber4()
 
         gamePage.clickSkip()
         gamePage = GamePage(word = "processor".reversed())
@@ -122,5 +124,219 @@ class ScenarioTest {
 
         gamePage.clickCheck()
         activityScenarioRule.doWithRecreate(gamePage::assertIncorrectAnswerState)
+    }
+
+
+    /**
+     * Test case number 3 (UGTC - 03)
+     */
+
+    @Test
+    fun caseNumber3() {
+        //region 5 correct answers
+        //first word
+        caseNumber4()
+
+        gamePage.addInput(userAnswer = "b")
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
+
+        gamePage.addInput(userAnswer = "luetooth")
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
+
+        gamePage.clickCheck()
+        activityScenarioRule.doWithRecreate(gamePage::assertCorrectAnswerState)
+
+        gamePage.clickNext()
+        gamePage = GamePage(word = "processor".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //second word
+        gamePage.addInput(userAnswer = "p")
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
+
+        gamePage.addInput(userAnswer = "rocessor")
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
+
+        gamePage.clickCheck()
+        activityScenarioRule.doWithRecreate(gamePage::assertCorrectAnswerState)
+
+        gamePage.clickNext()
+        gamePage = GamePage(word = "drone".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //third word
+        gamePage.addInput(userAnswer = "d")
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
+
+        gamePage.addInput(userAnswer = "rone")
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
+
+        gamePage.clickCheck()
+        activityScenarioRule.doWithRecreate(gamePage::assertCorrectAnswerState)
+
+        gamePage.clickNext()
+        gamePage = GamePage(word = "light".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //fourth word
+        gamePage.addInput(userAnswer = "l")
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
+
+        gamePage.addInput(userAnswer = "ight")
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
+
+        gamePage.clickCheck()
+        activityScenarioRule.doWithRecreate(gamePage::assertCorrectAnswerState)
+
+        gamePage.clickNext()
+        gamePage = GamePage(word = "tripple".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //fifth word
+        gamePage.addInput(userAnswer = "t")
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
+
+        gamePage.addInput(userAnswer = "ripple")
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
+
+        gamePage.clickCheck()
+        activityScenarioRule.doWithRecreate(gamePage::assertCorrectAnswerState)
+
+        gamePage.clickNext()
+        gamePage.assertNotVisible()
+
+        var gameOverPage = GameOverPage(correct = 5, incorrect = 0)
+        activityScenarioRule.doWithRecreate(gameOverPage::assertInitialState)
+
+        gameOverPage.clickNewGame()
+        gameOverPage.assertNotVisible()
+        //endregion
+
+        //region 5 incorrect answers
+        //first word
+
+        gamePage = GamePage(word = "bluetooth".reversed())
+        caseNumber4()
+
+        gamePage.clickSkip()
+        gamePage = GamePage(word = "processor".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //second word
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        gamePage.clickSkip()
+        gamePage = GamePage(word = "drone".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //third word
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        gamePage.clickSkip()
+        gamePage = GamePage(word = "light".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //fourth word
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        gamePage.clickSkip()
+        gamePage = GamePage(word = "tripple".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //fifth word
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        gamePage.clickSkip()
+        gamePage.assertNotVisible()
+
+        gameOverPage = GameOverPage(correct = 0, incorrect = 5)
+        activityScenarioRule.doWithRecreate(gameOverPage::assertInitialState)
+
+        gameOverPage.clickNewGame()
+        gameOverPage.assertNotVisible()
+        //endregion
+
+        //region 2 correct 3 incorrect answers
+        //first word
+
+        gamePage = GamePage(word = "bluetooth".reversed())
+        caseNumber4()
+
+        gamePage.addInput(userAnswer = "b")
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
+
+        gamePage.addInput(userAnswer = "luetooth")
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
+
+        gamePage.clickCheck()
+        activityScenarioRule.doWithRecreate(gamePage::assertCorrectAnswerState)
+
+        gamePage.clickNext()
+        gamePage = GamePage(word = "processor".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //second word
+        gamePage.addInput(userAnswer = "p")
+        activityScenarioRule.doWithRecreate(gamePage::assertInsufficientInputState)
+
+        gamePage.addInput(userAnswer = "rocessor")
+        activityScenarioRule.doWithRecreate(gamePage::assertSufficientInputState)
+
+        gamePage.clickCheck()
+        activityScenarioRule.doWithRecreate(gamePage::assertCorrectAnswerState)
+
+        gamePage.clickNext()
+        gamePage = GamePage(word = "drone".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //third word
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        gamePage.clickSkip()
+        gamePage = GamePage(word = "light".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //fourth word
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        gamePage.clickSkip()
+        gamePage = GamePage(word = "tripple".reversed())
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        //fifth word
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
+
+        gamePage.clickSkip()
+        gamePage.assertNotVisible()
+
+        gameOverPage = GameOverPage(correct = 2, incorrect = 3)
+        activityScenarioRule.doWithRecreate(gameOverPage::assertInitialState)
+
+        gameOverPage.clickNewGame()
+        gameOverPage.assertNotVisible()
+        //endregion
+    }
+
+    /**
+     * Test case number 4 (UGTC - 04)
+     */
+
+    @Test
+    fun caseNumber4() {
+        val loadPage = LoadPage()
+
+        activityScenarioRule.doWithRecreate(loadPage::assertProgressState)
+
+        loadPage.waitTilError()
+
+        activityScenarioRule.doWithRecreate(loadPage::assertErrorState)
+
+        loadPage.clickRetry()
+
+        activityScenarioRule.doWithRecreate(loadPage::assertProgressState)
+
+        loadPage.waitTillGone()
+
+        activityScenarioRule.doWithRecreate(gamePage::assertInitialState)
     }
 }
