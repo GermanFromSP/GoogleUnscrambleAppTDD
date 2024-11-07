@@ -2,6 +2,7 @@ package ru.german.android.expertcourseunscrambleword.load.di
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.german.android.expertcourseunscrambleword.core.MyViewModel
 import ru.german.android.expertcourseunscrambleword.core.RunAsync
 import ru.german.android.expertcourseunscrambleword.di.AbstractProvideViewModel
 import ru.german.android.expertcourseunscrambleword.di.Core
@@ -15,6 +16,7 @@ import ru.german.android.expertcourseunscrambleword.load.presentation.LoadViewMo
 
 class ProvideLoadViewModel(core: Core, next: ProvideViewModel) :
     AbstractProvideViewModel(core, next, LoadViewModel::class.java) {
+
     override fun module(): Module<*> = LoadModule(core)
 }
 
@@ -40,7 +42,7 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
                     core.size
                 ),
             observable = LoadUiObservable.Abstract(),
-            runAsync = RunAsync.Base(),
+            runAsync = core.runAsync,
             core.clearViewModel
         )
     }

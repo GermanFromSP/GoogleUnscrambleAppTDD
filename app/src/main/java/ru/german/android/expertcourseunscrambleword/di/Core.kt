@@ -3,10 +3,12 @@ package ru.german.android.expertcourseunscrambleword.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import ru.german.android.expertcourseunscrambleword.core.RunAsync
 import ru.german.android.expertcourseunscrambleword.load.cache.CacheModule
 
 class Core(context: Context, val clearViewModel: ClearViewModel) {
 
+    val runAsync: RunAsync = RunAsync.Base()
     var runUiTests = true
     val size = 5
 
