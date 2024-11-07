@@ -6,4 +6,8 @@
     <string name="answer">Your answer</string>
     <string name="empty" />
     <string name="error_mesage">Incorrect answer!</string>
+    <string name="newGame">New game</string>
+    <string name="stats">\Corrects: %d\nIncorrects: %d</string>
+    <string name="retry">Retry</string>
+    <string name="no_internet">No internet connection</string>
 </resources>
