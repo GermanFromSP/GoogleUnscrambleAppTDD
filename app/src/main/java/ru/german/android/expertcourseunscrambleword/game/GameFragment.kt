@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import ru.german.android.expertcourseunscrambleword.core.AbstractFragment
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.databinding.GameFragmentBinding
@@ -61,7 +63,10 @@ class GameFragment : AbstractFragment<GameUiState, GameViewModel>() {
         }
 
         binding.skipButton.setOnClickListener {
-            viewModel.clickSkip()
+            lifecycleScope.launch {
+                viewModel.clickSkip()
+            }
+
 
         }
 

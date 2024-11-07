@@ -1,11 +1,13 @@
 package ru.german.android.expertcourseunscrambleword.game.di
 
 import ru.german.android.expertcourseunscrambleword.core.IntCache
+import ru.german.android.expertcourseunscrambleword.core.MyViewModel
 import ru.german.android.expertcourseunscrambleword.di.AbstractProvideViewModel
 import ru.german.android.expertcourseunscrambleword.di.Core
 import ru.german.android.expertcourseunscrambleword.di.Module
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
 import ru.german.android.expertcourseunscrambleword.game.GameRepository
+import ru.german.android.expertcourseunscrambleword.game.GameUiObservable
 import ru.german.android.expertcourseunscrambleword.game.GameViewModel
 import ru.german.android.expertcourseunscrambleword.load.data.Response
 
@@ -41,7 +43,9 @@ class GameModule(private val core: Core) : Module<GameViewModel> {
                     dao = core.cacheModule.dao(),
                     clearDatabase = core.cacheModule.clearDatabase(),
                     size = core.size
-                )
+                ),
+            runAsync = core.runAsync,
+            uiObservable = GameUiObservable.Base()
         )
     }
 }
@@ -55,5 +59,5 @@ class ProvideGameViewModel(
     GameViewModel::class.java
 ) {
 
-    override fun module(): Module<*> = GameModule(core)
+    override fun module() = GameModule(core)
 }

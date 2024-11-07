@@ -9,8 +9,8 @@ interface GameRepository {
     suspend fun getOriginalWord(): String
     fun next()
     fun isLastQuestion(): Boolean
-    suspend fun clear()
-     fun skip()
+    fun clear()
+    fun skip()
 
     class Base(
         private val corrects: IntCache,
@@ -18,7 +18,7 @@ interface GameRepository {
         private val wordCaseIndex: IntCache,
         private val dao: WordsDao,
         private val clearDatabase: ClearDatabase,
-        private val size : Int
+        private val size: Int
     ) : GameRepository {
 
         override suspend fun getUnscrambleWord(): String {
@@ -37,15 +37,15 @@ interface GameRepository {
         }
 
         override fun isLastQuestion(): Boolean {
-           return wordCaseIndex.read() == size
+            return wordCaseIndex.read() == size
         }
 
-        override suspend fun clear() {
+        override fun clear() {
             wordCaseIndex.save(0)
             clearDatabase.clear()
         }
 
-        override suspend fun skip() {
+        override fun skip() {
             if (!isLastQuestion()) {
                 wordCaseIndex.save(wordCaseIndex.read() + 1)
             }
@@ -81,11 +81,11 @@ interface GameRepository {
         }
 
         override fun isLastQuestion(): Boolean = wordCaseIndex.read() == listOfOriginal.size
-        override suspend fun clear() {
+        override fun clear() {
             wordCaseIndex.save(0)
         }
 
-        override suspend fun skip() {
+        override fun skip() {
             if (!isLastQuestion()) {
                 wordCaseIndex.save(wordCaseIndex.read() + 1)
             }

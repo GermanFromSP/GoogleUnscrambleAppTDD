@@ -2,6 +2,7 @@ package ru.german.android.expertcourseunscrambleword.result
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import ru.german.android.expertcourseunscrambleword.game.GameUiObservable
 import ru.german.android.expertcourseunscrambleword.game.GameViewModelTest.FakeClearViewModel
 import ru.german.android.expertcourseunscrambleword.views.stats.StatsUiState
 
@@ -11,7 +12,11 @@ class GameOverViewModelTest {
     fun test() {
 
         val repository = FakeRepository()
-        val viewModel = GameOverViewModel(clearViewModel = FakeClearViewModel() , repository = repository)
+        val viewModel = GameOverViewModel(
+            clearViewModel = FakeClearViewModel(),
+            repository = repository,
+            observable = GameUiObservable.Base()
+        )
 
         assertEquals(StatsUiState.Base(2, 2), viewModel.getStatsUiState())
         assertEquals(false, repository.clearCalled)

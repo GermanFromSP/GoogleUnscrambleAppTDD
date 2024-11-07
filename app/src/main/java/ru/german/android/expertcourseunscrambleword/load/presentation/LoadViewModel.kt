@@ -12,7 +12,6 @@ class LoadViewModel(
     private val clearViewModel: ClearViewModel
 ) : MyViewModel.Abstract<LoadUiState>(observable) {
 
-
     fun load(isFirstRun: Boolean = true) {
         if (isFirstRun) {
 
@@ -31,6 +30,4 @@ class LoadViewModel(
             }
         }
     }
-
-
 }

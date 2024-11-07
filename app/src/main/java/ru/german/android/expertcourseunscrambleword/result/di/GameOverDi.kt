@@ -5,6 +5,7 @@ import ru.german.android.expertcourseunscrambleword.di.AbstractProvideViewModel
 import ru.german.android.expertcourseunscrambleword.di.Core
 import ru.german.android.expertcourseunscrambleword.di.Module
 import ru.german.android.expertcourseunscrambleword.di.ProvideViewModel
+import ru.german.android.expertcourseunscrambleword.game.GameUiObservable
 import ru.german.android.expertcourseunscrambleword.result.GameOverViewModel
 import ru.german.android.expertcourseunscrambleword.result.StatsRepository
 
@@ -18,7 +19,8 @@ class GameOverModule(private val core: Core) : Module<GameOverViewModel> {
             repository = StatsRepository.Base(
                 corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
                 incorrect = IntCache.Base(core.sharedPreferences, "incorrect", 0)
-            )
+            ),
+            observable = GameUiObservable.Base()
         )
     }
 }
